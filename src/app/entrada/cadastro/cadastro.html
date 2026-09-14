@@ -1,0 +1,129 @@
+<div class="pagina-cadastro">
+
+  <header class="topo-cadastro">
+    <div class="logo-box">
+      <div class="icone-logo">🎓</div>
+
+      <h2>UNIFIO</h2>
+
+      <span>ACHADOS E PERDIDOS</span>
+    </div>
+  </header>
+
+  <main class="conteudo-cadastro">
+
+    <section class="formulario-cadastro">
+
+      <h1>Crie sua conta</h1>
+
+      <p class="subtitulo">
+        Cadastre-se para começar a publicar e resgatar objetos perdidos.
+      </p>
+
+      <div class="campo">
+        <label for="nome">
+          Nome completo <span>*</span>
+        </label>
+
+        <input
+          type="text"
+          id="nome"
+          placeholder="Digite seu nome completo"
+        >
+      </div>
+
+      <div class="campo">
+        <label for="email">
+          E-mail institucional <span>*</span>
+        </label>
+
+        <input
+          type="email"
+          id="email"
+          placeholder="seu-email@unifio.edu.br"
+        >
+      </div>
+
+      <div class="campo">
+        <label for="telefone">
+          Telefone para contato <span>*</span>
+        </label>
+
+        <input
+          type="tel"
+          id="telefone"
+          placeholder="(14) 99999-9999"
+        >
+      </div>
+
+      <div class="campo">
+        <label for="senha">
+          Senha <span>*</span>
+        </label>
+
+        <div class="senha-container">
+
+          <input
+            [type]="mostrarSenha ? 'text' : 'password'"
+            id="senha"
+            placeholder="Crie uma senha forte"
+            >
+
+          <button
+            type="button"
+            class="botao-olho"
+            (mousedown)="mostrarSenha = true"
+            (mouseup)="mostrarSenha = false"
+            (mouseleave)="mostrarSenha = false"
+          >
+            👁
+          </button>
+
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="confirmarSenha">
+          Confirmar senha <span>*</span>
+        </label>
+
+        <div class="senha-container">
+
+          <input
+            [type]="mostrarConfimacaoSenha ? 'text' : 'password'"
+            id="confirmarSenha"
+            placeholder="Confirme a senha criada"
+          >
+
+          <button
+            type="button"
+            class="botao-olho"
+            (mousedown)="mostrarConfimacaoSenha = true"
+            (mouseup)="mostrarConfimacaoSenha = false"
+            (mouseleave)="mostrarConfimacaoSenha = false"
+          >
+            👁
+          </button>
+
+        </div>
+      </div>
+
+      <button class="botao-criar">
+        Criar conta
+      </button>
+
+    </section>
+
+  </main>
+
+  <footer class="rodape-cadastro">
+
+    <span>Já tem uma conta?</span>
+
+    <a routerLink="/entrada/login">
+      Já tenho conta
+    </a>
+
+  </footer>
+
+</div>

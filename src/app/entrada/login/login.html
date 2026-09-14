@@ -1,0 +1,80 @@
+<div class="pagina-login">
+    
+  <header class="topo-login">
+    <div class="logo-box">
+      <div class="icone-logo">🎓</div>
+      <h2>UNIFIO</h2>
+      <span>ACHADOS E PERDIDOS</span>
+    </div>
+  </header>
+
+  <main class="conteudo-login">
+
+    <section class="formulario-login">
+      <h1>Acesse sua conta</h1>
+      <p class="subtitulo">
+        Utilize seus dados de estudante cadastrados na UNIFIO para entrar.
+      </p>
+
+      <div class="campo">
+        <label for="email">
+          E-mail institucional <span>*</span>
+        </label>
+
+        <input
+          id="email"
+          type="email"
+          placeholder="exemplo@unifio.edu.br"
+        >
+      </div>
+
+      <div class="campo">
+        <label for="senha">
+          Senha <span>*</span>
+        </label>
+
+        <div class="senha-container">
+          <input
+            [type]="mostrarSenha ? 'text' : 'password'"
+            id="senha"
+            placeholder="Crie uma senha forte"
+          >
+
+          <button type="button"
+            class="botao-olho"
+            (mousedown)="mostrarSenha = true"
+            (mouseup)="mostrarSenha = false"
+            (mouseleave)="mostrarSenha = false"
+            class="botao-olho">
+            👁
+          </button>
+        </div>
+      </div>
+
+      <div class="opcoes-login">
+
+        <label class="lembrar">
+          <input type="checkbox">
+          Lembrar-me
+        </label>
+
+        <a href="#">
+          Esqueceu a senha?
+        </a>
+
+      </div>
+
+      <button class="botao-entrar">
+        Entrar
+      </button>
+
+    </section>
+
+  </main>
+
+  <footer class="rodape-login">
+    <span>Não tem uma conta?</span>
+    <a routerLink="/entrada/cadastro">Criar conta</a>
+  </footer>
+
+</div>
