@@ -1,129 +1,109 @@
+
 <div class="pagina-cadastro">
 
   <header class="topo-cadastro">
     <div class="logo-box">
       <div class="icone-logo">🎓</div>
-
-      <h2>UNIFIO</h2>
-
-      <span>ACHADOS E PERDIDOS</span>
+      <div class="texto-logo">
+        <h2>UNIFIO</h2>
+        <span>ACHADOS E PERDIDOS</span>
+      </div>
     </div>
   </header>
 
   <main class="conteudo-cadastro">
-
     <section class="formulario-cadastro">
 
-      <h1>Crie sua conta</h1>
+      <h1>CADASTRO</h1>
 
       <p class="subtitulo">
-        Cadastre-se para começar a publicar e resgatar objetos perdidos.
+        Informe os dados solicitados para realizar cadastro
       </p>
 
-      <div class="campo">
-        <label for="nome">
-          Nome completo <span>*</span>
-        </label>
+      <form (submit)="$event.preventDefault()">
 
-        <input
-          type="text"
-          id="nome"
-          placeholder="Digite seu nome completo"
-        >
-      </div>
-
-      <div class="campo">
-        <label for="email">
-          E-mail institucional <span>*</span>
-        </label>
-
-        <input
-          type="email"
-          id="email"
-          placeholder="seu-email@unifio.edu.br"
-        >
-      </div>
-
-      <div class="campo">
-        <label for="telefone">
-          Telefone para contato <span>*</span>
-        </label>
-
-        <input
-          type="tel"
-          id="telefone"
-          placeholder="(14) 99999-9999"
-        >
-      </div>
-
-      <div class="campo">
-        <label for="senha">
-          Senha <span>*</span>
-        </label>
-
-        <div class="senha-container">
-
+        <div class="campo">
+          <label for="nome">Nome de Usuário<span>*</span></label>
           <input
-            [type]="mostrarSenha ? 'text' : 'password'"
-            id="senha"
-            placeholder="Crie uma senha forte"
+            type="text"
+            id="nome"
+            name="nome"
+            placeholder="Digite seu nome de Usuário"
+            required
+          >
+        </div>
+
+        <div class="campo">
+          <label for="email">E-Mail institucional<span>*</span></label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="exemplo@unifio.edu.br"
+            required
+          >
+        </div>
+
+        <div class="campo">
+          <label for="senha">Senha<span>*</span></label>
+
+          <div class="senha-container">
+            <input
+              [type]="mostrarSenha ? 'text' : 'password'"
+              id="senha"
+              name="senha"
+              placeholder="Digite a sua senha"
+              required
             >
 
-          <button
-            type="button"
-            class="botao-olho"
-            (mousedown)="mostrarSenha = true"
-            (mouseup)="mostrarSenha = false"
-            (mouseleave)="mostrarSenha = false"
-          >
-            👁
+            <button
+              type="button"
+              class="botao-olho"
+              aria-label="Mostrar ou ocultar senha"
+              (click)="mostrarSenha = !mostrarSenha"
+            >
+              {{ mostrarSenha ? '🙈' : '👁' }}
+            </button>
+          </div>
+        </div>
+
+        <div class="campo">
+          <label for="confirmarSenha">Confirme sua senha<span>*</span></label>
+
+          <div class="senha-container">
+            <input
+              [type]="mostrarConfimacaoSenha ? 'text' : 'password'"
+              id="confirmarSenha"
+              name="confirmarSenha"
+              placeholder="Digite a sua senha"
+              required
+            >
+
+            <button
+              type="button"
+              class="botao-olho"
+              aria-label="Mostrar ou ocultar confirmação da senha"
+              (click)="mostrarConfimacaoSenha = !mostrarConfimacaoSenha"
+            >
+              {{ mostrarConfimacaoSenha ? '🙈' : '👁' }}
+            </button>
+          </div>
+        </div>
+
+        <div class="acoes-cadastro">
+          <button type="submit" class="botao-criar">
+            Efetuar Cadastro
           </button>
 
+          <div class="link-login">
+            <span>Já possui Login?</span>
+            <a routerLink="/entrada/login">LOGIN</a>
+          </div>
         </div>
-      </div>
 
-      <div class="campo">
-        <label for="confirmarSenha">
-          Confirmar senha <span>*</span>
-        </label>
-
-        <div class="senha-container">
-
-          <input
-            [type]="mostrarConfimacaoSenha ? 'text' : 'password'"
-            id="confirmarSenha"
-            placeholder="Confirme a senha criada"
-          >
-
-          <button
-            type="button"
-            class="botao-olho"
-            (mousedown)="mostrarConfimacaoSenha = true"
-            (mouseup)="mostrarConfimacaoSenha = false"
-            (mouseleave)="mostrarConfimacaoSenha = false"
-          >
-            👁
-          </button>
-
-        </div>
-      </div>
-
-      <button class="botao-criar">
-        Criar conta
-      </button>
+      </form>
 
     </section>
-
   </main>
-
-  <footer class="rodape-cadastro">
-
-    <span>Já tem uma conta?</span>
-
-    <a routerLink="/entrada/login">
-      Já tenho conta
-    </a>
-
-  </footer>
 
 </div>

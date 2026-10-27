@@ -1,80 +1,57 @@
+
 <div class="pagina-login">
-    
-  <header class="topo-login">
-    <div class="logo-box">
-      <div class="icone-logo">🎓</div>
-      <h2>UNIFIO</h2>
-      <span>ACHADOS E PERDIDOS</span>
-    </div>
-  </header>
 
-  <main class="conteudo-login">
+  <div class="painel-login">
 
-    <section class="formulario-login">
-      <h1>Acesse sua conta</h1>
-      <p class="subtitulo">
-        Utilize seus dados de estudante cadastrados na UNIFIO para entrar.
-      </p>
+    <header class="cabecalho">
+      <div class="logo">🎓</div>
 
-      <div class="campo">
-        <label for="email">
-          E-mail institucional <span>*</span>
-        </label>
-
-        <input
-          id="email"
-          type="email"
-          placeholder="exemplo@unifio.edu.br"
-        >
+      <div>
+        <span>UNIFIO</span>
+        <p>ACHADOS E PERDIDOS</p>
       </div>
+    </header>
 
-      <div class="campo">
-        <label for="senha">
-          Senha <span>*</span>
-        </label>
+    <main class="conteudo-login">
 
-        <div class="senha-container">
+      <h2>LOGIN</h2>
+
+      <p>Utilize seus dados de estudante para efetuar login.</p>
+
+      <form (ngSubmit)="entrar()">
+
+        <mat-form-field appearance="outline">
+          <mat-label>E-mail institucional</mat-label>
           <input
+            matInput
+            type="email"
+            name="email"
+            [(ngModel)]="email"
+            required
+          />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Senha</mat-label>
+          <input
+            matInput
             [type]="mostrarSenha ? 'text' : 'password'"
-            id="senha"
-            placeholder="Crie uma senha forte"
-          >
+            name="senha"
+            [(ngModel)]="senha"
+            required
+          />
+        </mat-form-field>
 
-          <button type="button"
-            class="botao-olho"
-            (mousedown)="mostrarSenha = true"
-            (mouseup)="mostrarSenha = false"
-            (mouseleave)="mostrarSenha = false"
-            class="botao-olho">
-            👁
-          </button>
-        </div>
-      </div>
+        <button mat-flat-button color="primary" type="submit">
+          Entrar
+        </button>
 
-      <div class="opcoes-login">
+        <p *ngIf="mensagem">{{ mensagem }}</p>
 
-        <label class="lembrar">
-          <input type="checkbox">
-          Lembrar-me
-        </label>
+      </form>
 
-        <a href="#">
-          Esqueceu a senha?
-        </a>
+    </main>
 
-      </div>
-
-      <button class="botao-entrar">
-        Entrar
-      </button>
-
-    </section>
-
-  </main>
-
-  <footer class="rodape-login">
-    <span>Não tem uma conta?</span>
-    <a routerLink="/entrada/cadastro">Criar conta</a>
-  </footer>
+  </div>
 
 </div>
