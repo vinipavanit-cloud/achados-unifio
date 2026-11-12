@@ -1,0 +1,42 @@
+<div class="layout-publicar">
+  <header class="topbar">
+    <a class="marca" routerLink="/inicio" aria-label="Página inicial Achados e Perdidos UNIFIO">
+      <span class="marca-icone"><mat-icon>school</mat-icon></span>
+      <span class="marca-texto"><strong>UNIFIO</strong><small>ACHADOS E PERDIDOS</small></span>
+    </a>
+    <button mat-button class="usuario" type="button" routerLink="/inicio/minhas-publicacoes" aria-label="Minhas publicações">
+      <span class="indicador-notificacao"></span><mat-icon>account_circle</mat-icon><span>User0000000000</span>
+    </button>
+  </header>
+  <aside class="sidebar" aria-label="Menu principal">
+    <a mat-button class="item-menu ativo" routerLink="/inicio/publicar"><mat-icon>add</mat-icon><span>PUBLICAR</span></a>
+    <a mat-button class="item-menu" routerLink="/inicio/pesquisar"><mat-icon>search</mat-icon><span>PESQUISAR</span></a>
+    <a mat-button class="item-menu" routerLink="/inicio/configuracoes"><mat-icon>construction</mat-icon><span>CONFIG.</span></a>
+  </aside>
+  <main class="conteudo">
+    <section class="formulario-publicar">
+      <h1>PUBLICAR OCORRÊNCIA</h1>
+      <p class="subtitulo">Informe os Dados para realizar a publicação da ocorrência</p>
+      <form #formPublicacao="ngForm" (ngSubmit)="enviar()">
+        <label for="titulo">Título<span>*</span></label>
+        <mat-form-field appearance="outline" class="campo">
+          <input matInput id="titulo" name="titulo" [(ngModel)]="titulo" placeholder="Exemplo: Carteira perdida no bloco 4" required />
+        </mat-form-field>
+        <label for="data">Data<span>*</span></label>
+        <mat-form-field appearance="outline" class="campo campo-data">
+          <input matInput id="data" name="data" type="date" [(ngModel)]="data" required />
+        </mat-form-field>
+        <label for="descricao">Descrição<span>*</span></label>
+        <mat-form-field appearance="outline" class="campo campo-descricao">
+          <textarea matInput id="descricao" name="descricao" [(ngModel)]="descricao" placeholder="Descreva a ocorrência. Ex: Onde ocorreu, quando" rows="3" required></textarea>
+        </mat-form-field>
+        <label for="contato">Contato<span>*</span></label>
+        <mat-form-field appearance="outline" class="campo">
+          <input matInput id="contato" name="contato" [(ngModel)]="contato" placeholder="E-mail, telefone, perfil do instagram, deixe aqui sua informação de contato." required />
+        </mat-form-field>
+        <button mat-flat-button color="primary" class="botao-enviar" type="submit" [disabled]="formPublicacao.invalid">Enviar</button>
+        <p class="mensagem" role="status" *ngIf="mensagem">{{ mensagem }}</p>
+      </form>
+    </section>
+  </main>
+</div>

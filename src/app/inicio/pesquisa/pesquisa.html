@@ -1,0 +1,54 @@
+<div class="layout-pesquisa">
+  <header class="topbar">
+    <a class="marca" routerLink="/inicio" aria-label="Página inicial Achados e Perdidos UNIFIO">
+      <span class="marca-icone"><mat-icon>school</mat-icon></span>
+      <span class="marca-texto"><strong>UNIFIO</strong><small>ACHADOS E PERDIDOS</small></span>
+    </a>
+    <button mat-button class="usuario" type="button" routerLink="/inicio/minhas-publicacoes" aria-label="Minhas publicações">
+      <span class="indicador-notificacao"></span>
+      <mat-icon>account_circle</mat-icon>
+      <span>User0000000000</span>
+    </button>
+  </header>
+
+  <aside class="sidebar" aria-label="Menu principal">
+    <a mat-button class="item-menu" routerLink="/inicio/publicar">
+      <mat-icon>add</mat-icon><span>PUBLICAR</span>
+    </a>
+    <a mat-button class="item-menu ativo" routerLink="/inicio/pesquisar">
+      <mat-icon>search</mat-icon><span>PESQUISAR</span>
+    </a>
+    <a mat-button class="item-menu" routerLink="/inicio/configuracoes">
+      <mat-icon>construction</mat-icon><span>CONFIG.</span>
+    </a>
+  </aside>
+
+  <main class="conteudo">
+    <form class="form-pesquisa" (ngSubmit)="$event.preventDefault()">
+      <label for="campo-pesquisa">PESQUISAR</label>
+      <div class="campo-com-icone">
+        <input id="campo-pesquisa" name="termo" [(ngModel)]="termo"
+          placeholder="Exemplo: Garrafinha" autocomplete="off" />
+        <button mat-icon-button type="submit" aria-label="Pesquisar">
+          <mat-icon>search</mat-icon>
+        </button>
+      </div>
+      <h2>PESQUISAS RELACIONADAS:</h2>
+    </form>
+
+    <section class="lista-resultados" aria-label="Publicações encontradas">
+      <article class="linha-resultado" *ngFor="let publicacao of resultados; let i = index" [routerLink]="['/inicio/detalhe', indiceOriginal(publicacao)]" role="link" tabindex="0">
+        <div class="card-publicacao">
+          <span class="data-publicacao">{{ publicacao.data }}</span>
+          <h3>{{ publicacao.titulo }}</h3>
+          <p>{{ publicacao.descricao }}</p>
+          <span class="tipo">Tipo: <strong [class.perdido]="publicacao.tipo === 'Perdido'"
+            [class.encontrado]="publicacao.tipo === 'Encontrado'">{{ publicacao.tipo }}</strong></span>
+        </div>
+      </article>
+      <p class="sem-resultados" *ngIf="resultados.length === 0">
+        Nenhuma publicação encontrada para "{{ termo }}".
+      </p>
+    </section>
+  </main>
+</div>

@@ -1,0 +1,39 @@
+<div class="layout-detalhe">
+  <header class="topbar">
+    <a class="marca" routerLink="/inicio" aria-label="Página inicial Achados e Perdidos UNIFIO">
+      <span class="marca-icone"><mat-icon>school</mat-icon></span>
+      <span class="marca-texto"><strong>UNIFIO</strong><small>ACHADOS E PERDIDOS</small></span>
+    </a>
+    <button mat-button class="usuario" type="button" routerLink="/inicio/minhas-publicacoes" aria-label="Minhas publicações">
+      <span class="indicador-notificacao"></span><mat-icon>account_circle</mat-icon><span>User0000000000</span>
+    </button>
+  </header>
+
+  <aside class="sidebar" aria-label="Menu principal">
+    <a mat-button class="item-menu" routerLink="/inicio/publicar"><mat-icon>add</mat-icon><span>PUBLICAR</span></a>
+    <a mat-button class="item-menu" routerLink="/inicio/pesquisar"><mat-icon>search</mat-icon><span>PESQUISAR</span></a>
+    <a mat-button class="item-menu" routerLink="/inicio/configuracoes"><mat-icon>construction</mat-icon><span>CONFIG.</span></a>
+  </aside>
+
+  <main class="conteudo">
+    <h1>DETALHES DA OCORRÊNCIA</h1>
+    <p class="data-publicacao">{{ publicacao.publicado }}</p>
+
+    <section class="cartao-detalhe">
+      <h2>{{ publicacao.titulo }}</h2>
+      <div class="linha-status">
+        <span>TIPO: <strong [class.perdido]="publicacao.tipo === 'Perdido'" [class.encontrado]="publicacao.tipo === 'Encontrado'">{{ publicacao.tipo }}</strong></span>
+        <span>STATUS: <strong class="ativo">{{ publicacao.status }}</strong></span>
+      </div>
+      <p class="informacao">LOCAL: {{ publicacao.local }}<br>DATA DA OCORRÊNCIA: {{ publicacao.dataOcorrencia }}</p>
+      <p class="rotulo-descricao">DESCRIÇÃO</p>
+      <p class="descricao">{{ publicacao.descricao }}</p>
+      <p class="contato" *ngIf="contatoVisivel">CONTATO: {{ publicacao.contato }}</p>
+    </section>
+
+    <footer class="acoes">
+      <button mat-button class="botao-voltar" type="button" routerLink="/inicio/pesquisar">VOLTAR</button>
+      <button mat-flat-button color="primary" class="botao-contato" type="button" (click)="verContato()">VER CONTATO</button>
+    </footer>
+  </main>
+</div>
