@@ -1,0 +1,51 @@
+<div class="pagina-recuperar">
+  <header class="cabecalho-recuperar">
+    <a class="marca-unifio" routerLink="/entrada/login" aria-label="Voltar para o login">
+      <span class="icone-marca" aria-hidden="true">
+        <mat-icon>school</mat-icon>
+      </span>
+      <span class="texto-marca">
+        <span class="nome-unifio">UNIFIO</span>
+        <span class="descricao-marca">ACHADOS E PERDIDOS</span>
+      </span>
+    </a>
+  </header>
+
+  <main class="conteudo-recuperar">
+    <mat-card appearance="outlined" class="formulario-recuperar">
+      <h1>RECUPERAR SENHA</h1>
+      <p class="subtitulo">Insira um e-mail cadastrado para recuperar sua senha</p>
+
+      <form (ngSubmit)="enviarCodigo()" #formRecuperacao="ngForm">
+        <mat-form-field appearance="outline" class="campo-email">
+          <mat-label>E-Mail institucional</mat-label>
+          <input
+            matInput
+            type="email"
+            name="email"
+            [(ngModel)]="email"
+            placeholder="exemplo@unifio.edu.br"
+            autocomplete="email"
+            required
+          />
+          <mat-error>Informe seu e-mail institucional.</mat-error>
+        </mat-form-field>
+
+        <div class="linha-acoes">
+          <button mat-flat-button type="submit" class="botao-enviar" [disabled]="!formRecuperacao.valid">
+            Enviar Código
+          </button>
+
+          <div class="link-cadastro">
+            <span>Não possui conta?</span>
+            <a routerLink="/entrada/cadastro">CADASTRO</a>
+          </div>
+        </div>
+
+        <p *ngIf="mensagem" class="mensagem" [class.mensagem-aviso]="tipoMensagem === 'aviso'" role="status">
+          {{ mensagem }}
+        </p>
+      </form>
+    </mat-card>
+  </main>
+</div>

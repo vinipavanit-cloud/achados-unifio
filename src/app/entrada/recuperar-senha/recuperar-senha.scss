@@ -1,0 +1,169 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.pagina-recuperar {
+  min-height: 100vh;
+  background: #fbfeff;
+  color: #4b1717;
+  box-sizing: border-box;
+}
+
+.cabecalho-recuperar {
+  padding: 5px 0 0 5px;
+}
+
+.marca-unifio {
+  display: inline-flex;
+  align-items: center;
+  gap: 26px;
+  min-width: 225px;
+  min-height: 60px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.icone-marca {
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  background: #e4f8fa;
+  color: #050505;
+}
+
+.icone-marca mat-icon {
+  width: 48px;
+  height: 48px;
+  font-size: 48px;
+}
+
+.texto-marca {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.nome-unifio {
+  color: #0785ed;
+  font-size: 30px;
+  line-height: 32px;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+.descricao-marca {
+  color: #111;
+  font-size: 9px;
+  line-height: 12px;
+}
+
+.conteudo-recuperar {
+  width: min(480px, calc(100% - 40px));
+  margin: 120px auto 0;
+}
+
+.formulario-recuperar h1 {
+  margin: 0 0 2px;
+  color: #4b1717;
+  font-size: 25px;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+.subtitulo {
+  margin: 0 0 17px;
+  color: #4b1717;
+  font-size: 12px;
+}
+
+.campo-email {
+  width: 100%;
+  font-size: 12px;
+}
+
+.campo-email .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+.linha-acoes {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  margin-top: -2px;
+}
+
+.botao-enviar {
+  width: 261px;
+  min-width: 0;
+  height: 29px;
+  border: 1px solid #111;
+  border-radius: 0;
+  background: #10a4d1 !important;
+  color: #fff !important;
+  font-size: 16px;
+  line-height: 27px;
+  font-weight: 400;
+}
+
+.botao-enviar:disabled {
+  opacity: 0.65;
+}
+
+.link-cadastro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding-top: 0;
+  color: #4b1717;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.link-cadastro a {
+  color: #009fe3;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.link-cadastro a:hover {
+  text-decoration: underline;
+}
+
+.mensagem {
+  margin: 12px 0 0;
+  color: #a32121;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.mensagem-aviso {
+  color: #72520a;
+}
+
+@media (max-width: 520px) {
+  .conteudo-recuperar {
+    margin-top: 90px;
+  }
+
+  .linha-acoes {
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .botao-enviar {
+    width: min(261px, 100%);
+  }
+}
+
+.icone-marca mat-icon {
+  font-family: 'Material Symbols Outlined';
+  font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 48;
+}
+
+.icone-marca mat-icon {
+  font-family: 'Material Symbols Outlined';
+  font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 48;
+}

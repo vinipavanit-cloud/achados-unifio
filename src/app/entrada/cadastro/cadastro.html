@@ -1,109 +1,67 @@
-
 <div class="pagina-cadastro">
-
   <header class="topo-cadastro">
-    <div class="logo-box">
-      <div class="icone-logo">🎓</div>
-      <div class="texto-logo">
-        <h2>UNIFIO</h2>
-        <span>ACHADOS E PERDIDOS</span>
-      </div>
-    </div>
+    <a class="marca-unifio" routerLink="/entrada/login" aria-label="Ir para o login">
+      <span class="icone-logo" aria-hidden="true"><mat-icon>school</mat-icon></span>
+      <span class="texto-logo">
+        <span class="nome">UNIFIO</span>
+        <span class="descricao">ACHADOS E PERDIDOS</span>
+      </span>
+    </a>
   </header>
 
-  <main class="conteudo-cadastro">
-    <section class="formulario-cadastro">
+  <main class="pagina">
+    <mat-card appearance="outlined">
+      <mat-card-header>
+        <mat-card-title>CADASTRO</mat-card-title>
+        <mat-card-subtitle>Informe os dados solicitados para realizar o cadastro</mat-card-subtitle>
+      </mat-card-header>
 
-      <h1>CADASTRO</h1>
+      <form #formCadastro="ngForm" (ngSubmit)="cadastrar()" novalidate>
+        <mat-card-content>
+          <mat-form-field appearance="outline">
+            <mat-label>Nome de usuário</mat-label>
+            <input matInput name="nome" required autocomplete="username" [(ngModel)]="nome" />
+            <mat-error>Informe o nome de usuário.</mat-error>
+          </mat-form-field>
 
-      <p class="subtitulo">
-        Informe os dados solicitados para realizar cadastro
-      </p>
+          <mat-form-field appearance="outline">
+            <mat-label>E-mail institucional</mat-label>
+            <input matInput type="email" name="email" required autocomplete="email"
+              placeholder="exemplo@unifio.edu.br" [(ngModel)]="email" />
+            <mat-hint *ngIf="email && !emailValido">Use um e-mail @unifio.edu.br.</mat-hint>
+          </mat-form-field>
 
-      <form (submit)="$event.preventDefault()">
-
-        <div class="campo">
-          <label for="nome">Nome de Usuário<span>*</span></label>
-          <input
-            type="text"
-            id="nome"
-            name="nome"
-            placeholder="Digite seu nome de Usuário"
-            required
-          >
-        </div>
-
-        <div class="campo">
-          <label for="email">E-Mail institucional<span>*</span></label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            placeholder="exemplo@unifio.edu.br"
-            required
-          >
-        </div>
-
-        <div class="campo">
-          <label for="senha">Senha<span>*</span></label>
-
-          <div class="senha-container">
-            <input
-              [type]="mostrarSenha ? 'text' : 'password'"
-              id="senha"
-              name="senha"
-              placeholder="Digite a sua senha"
-              required
-            >
-
-            <button
-              type="button"
-              class="botao-olho"
-              aria-label="Mostrar ou ocultar senha"
-              (click)="mostrarSenha = !mostrarSenha"
-            >
-              {{ mostrarSenha ? '🙈' : '👁' }}
+          <mat-form-field appearance="outline">
+            <mat-label>Senha</mat-label>
+            <input matInput name="senha" required minlength="8" autocomplete="new-password"
+              [type]="mostrarSenha ? 'text' : 'password'" [(ngModel)]="senha" />
+            <button mat-icon-button matSuffix type="button" (click)="mostrarSenha = !mostrarSenha"
+              [attr.aria-label]="mostrarSenha ? 'Ocultar senha' : 'Mostrar senha'">
+              <mat-icon>{{ mostrarSenha ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
-          </div>
-        </div>
+            <mat-hint>Mínimo de 8 caracteres.</mat-hint>
+          </mat-form-field>
 
-        <div class="campo">
-          <label for="confirmarSenha">Confirme sua senha<span>*</span></label>
-
-          <div class="senha-container">
-            <input
-              [type]="mostrarConfimacaoSenha ? 'text' : 'password'"
-              id="confirmarSenha"
-              name="confirmarSenha"
-              placeholder="Digite a sua senha"
-              required
-            >
-
-            <button
-              type="button"
-              class="botao-olho"
-              aria-label="Mostrar ou ocultar confirmação da senha"
-              (click)="mostrarConfimacaoSenha = !mostrarConfimacaoSenha"
-            >
-              {{ mostrarConfimacaoSenha ? '🙈' : '👁' }}
+          <mat-form-field appearance="outline">
+            <mat-label>Confirme sua senha</mat-label>
+            <input matInput name="confirmarSenha" required autocomplete="new-password"
+              [type]="mostrarConfirmacao ? 'text' : 'password'" [(ngModel)]="confirmarSenha" />
+            <button mat-icon-button matSuffix type="button" (click)="mostrarConfirmacao = !mostrarConfirmacao"
+              [attr.aria-label]="mostrarConfirmacao ? 'Ocultar senha' : 'Mostrar senha'">
+              <mat-icon>{{ mostrarConfirmacao ? 'visibility_off' : 'visibility' }}</mat-icon>
             </button>
-          </div>
-        </div>
+            <mat-hint *ngIf="confirmarSenha && !senhasConferem">As senhas não coincidem.</mat-hint>
+          </mat-form-field>
 
-        <div class="acoes-cadastro">
-          <button type="submit" class="botao-criar">
-            Efetuar Cadastro
-          </button>
+          <p *ngIf="mensagem" class="mensagem" role="status">{{ mensagem }}</p>
+        </mat-card-content>
 
-          <div class="link-login">
-            <span>Já possui Login?</span>
-            <a routerLink="/entrada/login">LOGIN</a>
-          </div>
-        </div>
-
+        <mat-card-actions align="end">
+          <span class="link-login">Já possui login? <a routerLink="/entrada/login">LOGIN</a></span>
+          <button mat-button type="button" (click)="limpar()">Limpar</button>
+          <button mat-flat-button type="submit" [disabled]="!formularioValido">Efetuar cadastro</button>
+        </mat-card-actions>
       </form>
-
-    </section>
+    </mat-card>
   </main>
-
 </div>

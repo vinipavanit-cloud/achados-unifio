@@ -21,7 +21,8 @@ import { App } from './app';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),

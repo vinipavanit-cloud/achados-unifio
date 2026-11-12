@@ -1,0 +1,52 @@
+<div class="pagina-codigo">
+  <header class="cabecalho-codigo">
+    <a class="marca-unifio" routerLink="/entrada/login" aria-label="Voltar para o login">
+      <span class="icone-marca" aria-hidden="true"><mat-icon>school</mat-icon></span>
+      <span class="texto-marca">
+        <span class="nome-unifio">UNIFIO</span>
+        <span class="descricao-marca">ACHADOS E PERDIDOS</span>
+      </span>
+    </a>
+  </header>
+
+  <main class="conteudo-codigo">
+    <mat-card appearance="outlined" class="formulario-codigo">
+      <h1>RECUPERAR SENHA</h1>
+      <p class="subtitulo">Insira o Código enviado em seu e-mail</p>
+
+      <form (ngSubmit)="confirmar()">
+        <div class="campos-codigo" aria-label="Código de verificação de seis dígitos">
+          <input
+            #campoCodigo
+            *ngFor="let digito of digitos; let i = index"
+            matInput
+            type="text"
+            inputmode="numeric"
+            autocomplete="one-time-code"
+            maxlength="1"
+            [name]="'codigo' + i"
+            [value]="digitos[i]"
+            (input)="aoDigitar($event, i)"
+            (keydown)="aoPressionar($event, i)"
+            (paste)="colarCodigo($event)"
+            [attr.aria-label]="'Dígito ' + (i + 1)"
+          />
+        </div>
+
+        <div class="linha-acoes">
+          <button mat-flat-button type="submit" class="botao-confirmar" [disabled]="digitos.join('').length !== 6">
+            Confirmar
+          </button>
+          <div class="link-reenvio">
+            <span>O código não chegou?</span>
+            <button type="button" mat-button class="botao-reenviar" (click)="reenviar()">REENVIAR</button>
+          </div>
+        </div>
+
+        <p *ngIf="mensagem" class="mensagem" [class.mensagem-aviso]="tipoMensagem === 'aviso'" role="status">
+          {{ mensagem }}
+        </p>
+      </form>
+    </mat-card>
+  </main>
+</div>

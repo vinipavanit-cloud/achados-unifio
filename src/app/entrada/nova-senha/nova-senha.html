@@ -1,0 +1,57 @@
+<div class="pagina-nova-senha">
+  <header class="cabecalho-nova-senha">
+    <a class="marca-unifio" routerLink="/entrada/login" aria-label="Voltar para o login">
+      <span class="icone-marca" aria-hidden="true"><mat-icon>school</mat-icon></span>
+      <span class="texto-marca">
+        <span class="nome-unifio">UNIFIO</span>
+        <span class="descricao-marca">ACHADOS E PERDIDOS</span>
+      </span>
+    </a>
+  </header>
+
+  <main class="conteudo-nova-senha">
+    <mat-card appearance="outlined" class="formulario-nova-senha">
+      <h1>RECUPERAR SENHA</h1>
+      <p class="subtitulo">Insira a nova senha</p>
+
+      <form #formNovaSenha="ngForm" (ngSubmit)="salvarNovaSenha()" novalidate>
+        <label for="nova-senha">Senha<span class="obrigatorio">*</span></label>
+        <mat-form-field appearance="outline" class="campo-senha">
+          <input
+            matInput
+            id="nova-senha"
+            name="senha"
+            [type]="mostrarSenha ? 'text' : 'password'"
+            [(ngModel)]="senha"
+            placeholder="Digite a sua senha"
+            autocomplete="new-password"
+            required
+          />
+          <button mat-icon-button matSuffix type="button" (click)="mostrarSenha = !mostrarSenha" [attr.aria-label]="mostrarSenha ? 'Ocultar senha' : 'Mostrar senha'">
+            <mat-icon>{{ mostrarSenha ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <label for="confirmar-senha">Confirme sua senha<span class="obrigatorio">*</span></label>
+        <mat-form-field appearance="outline" class="campo-senha">
+          <input
+            matInput
+            id="confirmar-senha"
+            name="confirmarSenha"
+            [type]="mostrarConfirmacao ? 'text' : 'password'"
+            [(ngModel)]="confirmarSenha"
+            placeholder="Digite a sua senha"
+            autocomplete="new-password"
+            required
+          />
+          <button mat-icon-button matSuffix type="button" (click)="mostrarConfirmacao = !mostrarConfirmacao" [attr.aria-label]="mostrarConfirmacao ? 'Ocultar senha' : 'Mostrar senha'">
+            <mat-icon>{{ mostrarConfirmacao ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <button mat-flat-button type="submit" class="botao-confirmar" [disabled]="!senha || !confirmarSenha">Confirmar</button>
+        <p *ngIf="mensagem" class="mensagem" [class.mensagem-aviso]="tipoMensagem === 'aviso'" role="status">{{ mensagem }}</p>
+      </form>
+    </mat-card>
+  </main>
+</div>
