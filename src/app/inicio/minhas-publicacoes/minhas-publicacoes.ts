@@ -1,15 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
+import { mensagemErro } from '../../core/api.config';
+import { AuthService } from '../../core/auth.service';
+import { Publicacao, PublicacaoRequest, StatusPublicacao } from '../../core/models';
+import { PublicacaoService } from '../../core/publicacao.service';
 
-type Status = 'Ativa' | 'Finalizada' | 'Cancelada';
-type Filtro = 'Todas' | Status;
-
-interface MinhaPublicacao {
-  id: number;
-  titulo: string;
-  descricao: string;
-  data: string;
-  status: Status;
-}
+type Filtro = 'TODAS' | StatusPublicacao;
 
 @Component({
   selector: 'app-minhas-publicacoes',
@@ -17,87 +12,129 @@ interface MinhaPublicacao {
   templateUrl: './minhas-publicacoes.html',
   styleUrl: './minhas-publicacoes.scss',
 })
-export class MinhasPublicacoes {
-  usuario = 'User0000000000';
+export class MinhasPublicacoes implements OnInit {
+  private publicacoesService = inject(PublicacaoService);
+  protected auth = inject(AuthService);
 
-  // Mesmo valor usado no value de cada mat-button-toggle (filtro no template).
   filtros: { rotulo: string; valor: Filtro }[] = [
-    { rotulo: 'Todas', valor: 'Todas' },
-    { rotulo: 'Ativas', valor: 'Ativa' },
-    { rotulo: 'Finalizadas', valor: 'Finalizada' },
-    { rotulo: 'Canceladas', valor: 'Cancelada' },
+    { rotulo: 'Todas', valor: 'TODAS' },
+    { rotulo: 'Ativas', valor: 'ATIVA' },
+    { rotulo: 'Finalizadas', valor: 'FINALIZADA' },
+    { rotulo: 'Canceladas', valor: 'CANCELADA' },
   ];
-  filtro: Filtro = 'Todas';
+  filtro: Filtro = 'TODAS';
 
-  // Dados provisórios até a API de publicações do backend ficar pronta.
-  publicacoes: MinhaPublicacao[] = [
-    {
-      id: 1,
-      titulo: 'Garrafa Stanley perdida no Bloco 7',
-      descricao: 'Perdi uma garrafa azul próxima às salas do bloco 7.',
-      data: '01/09/2026',
-      status: 'Ativa',
-    },
-    {
-      id: 2,
-      titulo: 'Caderno encontrado na Biblioteca',
-      descricao: 'Caderno encontrado na mesa de estudos da biblioteca.',
-      data: '18/08/2026',
-      status: 'Finalizada',
-    },
-  ];
+  publicacoes = signal<Publicacao[]>([]);
+  carregando = signal(true);
+  mensagem = signal('');
 
   editandoId: number | null = null;
   tituloEdicao = '';
   descricaoEdicao = '';
-  mensagem = '';
 
-  get lista(): MinhaPublicacao[] {
-    return this.filtro === 'Todas'
-      ? this.publicacoes
-      : this.publicacoes.filter((p) => p.status === this.filtro);
+  ngOnInit(): void {
+    this.carregar();
+  }
+
+  private carregar(): void {
+    const idUsuario = this.auth.usuario?.idUsuario;
+    this.publicacoesService.listarTodas().subscribe({
+      next: (lista) => {
+        // Enquanto não existir GET /publicacao/minhas, filtramos pelo usuário logado aqui.
+        this.publicacoes.set(lista.filter((p) => p.usuario?.idUsuario === idUsuario));
+        this.carregando.set(false);
+      },
+      error: () => {
+        this.mensagem.set('Não foi possível carregar suas publicações.');
+        this.carregando.set(false);
+      },
+    });
+  }
+
+  get lista(): Publicacao[] {
+    const todas = this.publicacoes();
+    return this.filtro === 'TODAS' ? todas : todas.filter((p) => p.status === this.filtro);
   }
 
   get edicaoValida(): boolean {
     return !!this.tituloEdicao.trim() && !!this.descricaoEdicao.trim();
   }
 
-  alteravel(p: MinhaPublicacao): boolean {
-    return p.status === 'Ativa';
+  alteravel(p: Publicacao): boolean {
+    return p.status === 'ATIVA';
   }
 
-  editar(p: MinhaPublicacao): void {
+  editar(p: Publicacao): void {
     if (!this.alteravel(p)) return;
-    this.editandoId = p.id;
-    this.tituloEdicao = p.titulo;
+    this.editandoId = p.idPublicacao;
+    this.tituloEdicao = p.nome;
     this.descricaoEdicao = p.descricao;
-    this.mensagem = '';
+    this.mensagem.set('');
   }
 
-  salvarEdicao(p: MinhaPublicacao): void {
+  salvarEdicao(p: Publicacao): void {
     if (!this.alteravel(p) || !this.edicaoValida) return;
-    // Simulação: a alteração só é aplicada localmente (PUT ainda não existe).
-    p.titulo = this.tituloEdicao.trim();
-    p.descricao = this.descricaoEdicao.trim();
-    this.editandoId = null;
-    this.mensagem = 'Alteração aplicada (simulação). Será gravada quando a API estiver integrada.';
+    this.enviarAtualizacao(
+      p,
+      { nome: this.tituloEdicao.trim(), descricao: this.descricaoEdicao.trim() },
+      'Publicação atualizada.',
+    );
   }
 
   cancelarEdicao(): void {
     this.editandoId = null;
   }
 
-  finalizar(p: MinhaPublicacao): void {
+  finalizar(p: Publicacao): void {
     if (!this.alteravel(p)) return;
-    p.status = 'Finalizada';
-    this.editandoId = null;
-    this.mensagem = 'Ocorrência finalizada (simulação). Será gravada quando a API estiver integrada.';
+    this.enviarAtualizacao(p, { status: 'FINALIZADA' }, 'Ocorrência finalizada.');
   }
 
-  cancelar(p: MinhaPublicacao): void {
+  cancelar(p: Publicacao): void {
     if (!this.alteravel(p)) return;
-    p.status = 'Cancelada';
-    this.editandoId = null;
-    this.mensagem = 'Ocorrência cancelada (simulação). Será gravada quando a API estiver integrada.';
+    this.enviarAtualizacao(p, { status: 'CANCELADA' }, 'Ocorrência cancelada.');
+  }
+
+  excluir(p: Publicacao): void {
+    if (!window.confirm(`Excluir a publicação "${p.nome}"? Essa ação não pode ser desfeita.`)) {
+      return;
+    }
+    this.publicacoesService.excluir(p.idPublicacao).subscribe({
+      next: () => {
+        this.editandoId = null;
+        this.mensagem.set('Publicação excluída.');
+        this.carregar();
+      },
+      error: (erro) => this.mensagem.set(mensagemErro(erro, 'Não foi possível excluir.')),
+    });
+  }
+
+  private enviarAtualizacao(
+    p: Publicacao,
+    mudancas: Partial<PublicacaoRequest>,
+    sucesso: string,
+  ): void {
+    if (!p.local) {
+      this.mensagem.set('Publicação sem local; não é possível atualizar.');
+      return;
+    }
+    const dados: PublicacaoRequest = {
+      idLocal: p.local.idLocal,
+      nome: p.nome,
+      descricao: p.descricao,
+      dataOcorrencia: p.dataOcorrencia.slice(0, 10),
+      tipo: p.tipo,
+      status: p.status,
+      contato: p.contato ?? undefined,
+      ...mudancas,
+    };
+    this.publicacoesService.atualizar(p.idPublicacao, dados).subscribe({
+      next: () => {
+        this.editandoId = null;
+        this.mensagem.set(sucesso);
+        this.carregar();
+      },
+      error: (erro) => this.mensagem.set(mensagemErro(erro, 'Não foi possível atualizar.')),
+    });
   }
 }

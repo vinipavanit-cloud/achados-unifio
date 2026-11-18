@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../core/auth.service';
+import { mensagemErro } from '../../core/api.config';
 
 @Component({
   selector: 'app-cadastro',
@@ -7,13 +10,17 @@ import { Component } from '@angular/core';
   templateUrl: './cadastro.html',
 })
 export class Cadastro {
+  private auth = inject(AuthService);
+  private router = inject(Router);
+
   nome = '';
   email = '';
   senha = '';
   confirmarSenha = '';
   mostrarSenha = false;
   mostrarConfirmacao = false;
-  mensagem = '';
+  mensagem = signal('');
+  enviando = signal(false);
 
   get emailValido(): boolean {
     return /^[^\s@]+@unifio\.edu\.br$/i.test(this.email.trim());
@@ -33,10 +40,20 @@ export class Cadastro {
   }
 
   cadastrar(): void {
-    if (!this.formularioValido) return;
-    // A API de cadastro ainda não foi disponibilizada: isto é uma simulação.
-    this.mensagem =
-      'Dados validados (simulação). O cadastro será gravado quando a API estiver integrada.';
+    if (!this.formularioValido || this.enviando()) return;
+    this.enviando.set(true);
+    this.mensagem.set('');
+    this.auth.cadastrar(this.nome.trim(), this.email.trim(), this.senha).subscribe({
+      next: () => {
+        this.enviando.set(false);
+        this.mensagem.set('Cadastro realizado! Redirecionando para o login...');
+        setTimeout(() => this.router.navigate(['/entrada/login']), 1200);
+      },
+      error: (erro) => {
+        this.enviando.set(false);
+        this.mensagem.set(mensagemErro(erro, 'Não foi possível concluir o cadastro.'));
+      },
+    });
   }
 
   limpar(): void {
@@ -44,6 +61,6 @@ export class Cadastro {
     this.email = '';
     this.senha = '';
     this.confirmarSenha = '';
-    this.mensagem = '';
+    this.mensagem.set('');
   }
 }

@@ -53,13 +53,13 @@
             <mat-hint *ngIf="confirmarSenha && !senhasConferem">As senhas não coincidem.</mat-hint>
           </mat-form-field>
 
-          <p *ngIf="mensagem" class="mensagem" role="status">{{ mensagem }}</p>
+          <p *ngIf="mensagem()" class="mensagem" role="status">{{ mensagem() }}</p>
         </mat-card-content>
 
         <mat-card-actions align="end">
           <span class="link-login">Já possui login? <a routerLink="/entrada/login">LOGIN</a></span>
           <button mat-button type="button" (click)="limpar()">Limpar</button>
-          <button mat-flat-button type="submit" [disabled]="!formularioValido">Efetuar cadastro</button>
+          <button mat-flat-button type="submit" [disabled]="!formularioValido || enviando()">Efetuar cadastro</button>
         </mat-card-actions>
       </form>
     </mat-card>

@@ -7,7 +7,7 @@
     <button mat-button class="usuario" type="button" routerLink="/inicio/minhas-publicacoes" aria-label="Minhas publicações">
       <span class="indicador-notificacao"></span>
       <mat-icon>account_circle</mat-icon>
-      <span>User0000000000</span>
+      <span>{{ auth.nome }}</span>
     </button>
   </header>
 
@@ -18,9 +18,9 @@
     <a mat-button class="item-menu ativo" routerLink="/inicio/pesquisar">
       <mat-icon>search</mat-icon><span>PESQUISAR</span>
     </a>
-    <a mat-button class="item-menu" routerLink="/inicio/configuracoes">
-      <mat-icon>construction</mat-icon><span>CONFIG.</span>
-    </a>
+    <button mat-button class="item-menu" type="button" (click)="auth.sair()">
+      <mat-icon>logout</mat-icon><span>SAIR</span>
+    </button>
   </aside>
 
   <main class="conteudo">
@@ -37,17 +37,19 @@
     </form>
 
     <section class="lista-resultados" aria-label="Publicações encontradas">
-      <article class="linha-resultado" *ngFor="let publicacao of resultados; let i = index" [routerLink]="['/inicio/detalhe', indiceOriginal(publicacao)]" role="link" tabindex="0">
+      <article class="linha-resultado" *ngFor="let publicacao of resultados" [routerLink]="['/inicio/detalhe', publicacao.idPublicacao]" role="link" tabindex="0">
         <div class="card-publicacao">
-          <span class="data-publicacao">{{ publicacao.data }}</span>
-          <h3>{{ publicacao.titulo }}</h3>
+          <span class="data-publicacao">Publicado {{ publicacao.dataCriacao | date:'dd/MM/yyyy HH:mm' }}</span>
+          <h3>{{ publicacao.nome }}</h3>
           <p>{{ publicacao.descricao }}</p>
-          <span class="tipo">Tipo: <strong [class.perdido]="publicacao.tipo === 'Perdido'"
-            [class.encontrado]="publicacao.tipo === 'Encontrado'">{{ publicacao.tipo }}</strong></span>
+          <span class="tipo">Tipo: <strong [class.perdido]="publicacao.tipo === 'PERDIDO'"
+            [class.encontrado]="publicacao.tipo === 'ENCONTRADO'">{{ publicacao.tipo | titlecase }}</strong></span>
         </div>
       </article>
-      <p class="sem-resultados" *ngIf="resultados.length === 0">
-        Nenhuma publicação encontrada para "{{ termo }}".
+      <p class="sem-resultados" *ngIf="carregando()">Carregando...</p>
+      <p class="sem-resultados" *ngIf="erro()">{{ erro() }}</p>
+      <p class="sem-resultados" *ngIf="!carregando() && !erro() && resultados.length === 0">
+        Nenhuma publicação encontrada<span *ngIf="termo"> para "{{ termo }}"</span>.
       </p>
     </section>
   </main>

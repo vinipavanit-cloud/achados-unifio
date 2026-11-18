@@ -8,6 +8,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 
 import { InicioRoutingModule } from './inicio-routing-module';
 import { Detalhe } from './detalhe/detalhe';
@@ -28,6 +29,7 @@ import { MinhasPublicacoes } from './minhas-publicacoes/minhas-publicacoes';
     MatIconModule,
     MatCardModule,
     MatButtonToggleModule,
+    MatSelectModule,
   ],
 })
 export class InicioModule {}

@@ -1,11 +1,7 @@
-import { Component } from '@angular/core';
-
-interface PublicacaoResumo {
-  data: string;
-  titulo: string;
-  descricao: string;
-  tipo: 'Perdido' | 'Encontrado';
-}
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { AuthService } from '../core/auth.service';
+import { Publicacao } from '../core/models';
+import { PublicacaoService, calcularKpis } from '../core/publicacao.service';
 
 @Component({
   selector: 'app-inicio',
@@ -13,33 +9,27 @@ interface PublicacaoResumo {
   templateUrl: './inicio.html',
   styleUrl: './inicio.scss',
 })
-export class Inicio {
-  usuario = 'User0000000000';
-  menuSelecionado = 'inicio';
+export class Inicio implements OnInit {
+  private publicacoesService = inject(PublicacaoService);
+  protected auth = inject(AuthService);
 
-  // Conteúdo provisório para reproduzir o layout do Figma até a API de publicações ficar pronta.
-  publicacoes: PublicacaoResumo[] = [
-    {
-      data: 'Publicado 01/09/2026 14:26',
-      titulo: 'Garrafa Stanley perdida no Bloco 7',
-      descricao: 'Perdi uma garrafa no bloco 7 no dia 31/09/2026...',
-      tipo: 'Perdido',
-    },
-    {
-      data: 'Publicado 27/08/2026 02:34',
-      titulo: 'Mochila perdida nos corredores',
-      descricao: 'Acabei deixando uma mochila preta no corredor...',
-      tipo: 'Encontrado',
-    },
-    {
-      data: 'Publicado 27/08/2026 02:34',
-      titulo: 'Celular e carteira perdidos',
-      descricao: 'Alguém pelo amor de Deus consegue me...',
-      tipo: 'Perdido',
-    },
-  ];
+  publicacoes = signal<Publicacao[]>([]);
+  carregando = signal(true);
+  erro = signal('');
 
-  selecionarMenu(menu: string): void {
-    this.menuSelecionado = menu;
+  recentes = computed(() => this.publicacoes().slice(0, 3));
+  kpis = computed(() => calcularKpis(this.publicacoes(), this.auth.usuario?.idUsuario));
+
+  ngOnInit(): void {
+    this.publicacoesService.listarTodas().subscribe({
+      next: (lista) => {
+        this.publicacoes.set(lista);
+        this.carregando.set(false);
+      },
+      error: () => {
+        this.erro.set('Não foi possível carregar as publicações.');
+        this.carregando.set(false);
+      },
+    });
   }
 }

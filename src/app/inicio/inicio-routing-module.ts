@@ -25,10 +25,6 @@ const routes: Routes = [
 
   {
     path: 'minhas-publicacoes', component: MinhasPublicacoes
-  },
-
-  {
-    path: 'configuracoes', redirectTo: '' , pathMatch: 'full'
   }
 ];
 

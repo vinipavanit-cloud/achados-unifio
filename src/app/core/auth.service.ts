@@ -1,0 +1,102 @@
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable, catchError, finalize, map, of, switchMap, tap } from 'rxjs';
+import { API_URL } from './api.config';
+import { CsrfService } from './csrf.service';
+import { UsuarioLogado, UsuarioResumo } from './models';
+
+const CHAVE = 'achados.usuario';
+
+@Injectable({ providedIn: 'root' })
+export class AuthService {
+  private http = inject(HttpClient);
+  private csrf = inject(CsrfService);
+  private router = inject(Router);
+
+  usuario: UsuarioLogado | null = this.ler();
+
+  get logado(): boolean {
+    return this.usuario !== null;
+  }
+
+  get nome(): string {
+    return this.usuario?.nome ?? '';
+  }
+
+  cadastrar(nome: string, email: string, senha: string): Observable<UsuarioResumo> {
+    return this.http.post<UsuarioResumo>(`${API_URL}/usuario/autenticacao/cadastrar`, {
+      nome,
+      email,
+      senha,
+    });
+  }
+
+  login(email: string, senha: string): Observable<UsuarioLogado> {
+    const corpo = new HttpParams().set('email', email).set('senha', senha).toString();
+    return this.http
+      .post(`${API_URL}/usuario/autenticacao/login`, corpo, {
+        headers: new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' }),
+        responseType: 'text',
+      })
+      .pipe(
+        tap(() => this.csrf.limpar()),
+        // Endpoint /me ainda precisa ser criado no backend; sem ele usamos o e-mail.
+        switchMap(() =>
+          this.http
+            .get<UsuarioResumo>(`${API_URL}/usuario/autenticacao/me`)
+            .pipe(catchError(() => of(null))),
+        ),
+        map((me) => {
+          const usuario: UsuarioLogado = {
+            idUsuario: me?.idUsuario,
+            nome: me?.nome ?? email.split('@')[0],
+            email,
+          };
+          this.guardar(usuario);
+          return usuario;
+        }),
+      );
+  }
+
+  sair(): void {
+    this.http
+      .post(`${API_URL}/logout`, null, { responseType: 'text' })
+      .pipe(
+        catchError(() => of(null)),
+        finalize(() => {
+          this.limparSessao();
+          this.router.navigate(['/entrada/login']);
+        }),
+      )
+      .subscribe();
+  }
+
+  limparSessao(): void {
+    this.usuario = null;
+    this.csrf.limpar();
+    try {
+      sessionStorage.removeItem(CHAVE);
+    } catch {
+      // armazenamento indisponível: ignora
+    }
+  }
+
+  private guardar(usuario: UsuarioLogado): void {
+    this.usuario = usuario;
+    try {
+      sessionStorage.setItem(CHAVE, JSON.stringify(usuario));
+    } catch {
+      // armazenamento indisponível: a sessão vale só até recarregar
+    }
+  }
+
+  private ler(): UsuarioLogado | null {
+    try {
+      const bruto = sessionStorage.getItem(CHAVE);
+      return bruto ? (JSON.parse(bruto) as UsuarioLogado) : null;
+    } catch {
+      return null;
+    }
+  }
+}

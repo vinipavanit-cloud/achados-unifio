@@ -42,11 +42,16 @@
           />
         </mat-form-field>
 
-        <button mat-flat-button color="primary" type="submit">
+        <button mat-flat-button color="primary" type="submit" [disabled]="enviando()">
           Entrar
         </button>
 
-        <p *ngIf="mensagem">{{ mensagem }}</p>
+        <p *ngIf="mensagem()" role="alert">{{ mensagem() }}</p>
+
+        <p class="links-login">
+          <a routerLink="/entrada/recuperar-senha">Esqueci minha senha</a><br />
+          Não tem conta? <a routerLink="/entrada/cadastro">Cadastre-se</a>
+        </p>
 
       </form>
 

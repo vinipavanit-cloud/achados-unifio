@@ -5,35 +5,43 @@
       <span class="marca-texto"><strong>UNIFIO</strong><small>ACHADOS E PERDIDOS</small></span>
     </a>
     <button mat-button class="usuario" type="button" routerLink="/inicio/minhas-publicacoes" aria-label="Minhas publicações">
-      <span class="indicador-notificacao"></span><mat-icon>account_circle</mat-icon><span>User0000000000</span>
+      <span class="indicador-notificacao"></span><mat-icon>account_circle</mat-icon><span>{{ auth.nome }}</span>
     </button>
   </header>
 
   <aside class="sidebar" aria-label="Menu principal">
     <a mat-button class="item-menu" routerLink="/inicio/publicar"><mat-icon>add</mat-icon><span>PUBLICAR</span></a>
     <a mat-button class="item-menu" routerLink="/inicio/pesquisar"><mat-icon>search</mat-icon><span>PESQUISAR</span></a>
-    <a mat-button class="item-menu" routerLink="/inicio/configuracoes"><mat-icon>construction</mat-icon><span>CONFIG.</span></a>
+    <button mat-button class="item-menu" type="button" (click)="auth.sair()">
+      <mat-icon>logout</mat-icon><span>SAIR</span>
+    </button>
   </aside>
 
   <main class="conteudo">
     <h1>DETALHES DA OCORRÊNCIA</h1>
-    <p class="data-publicacao">{{ publicacao.publicado }}</p>
 
-    <section class="cartao-detalhe">
-      <h2>{{ publicacao.titulo }}</h2>
-      <div class="linha-status">
-        <span>TIPO: <strong [class.perdido]="publicacao.tipo === 'Perdido'" [class.encontrado]="publicacao.tipo === 'Encontrado'">{{ publicacao.tipo }}</strong></span>
-        <span>STATUS: <strong class="ativo">{{ publicacao.status }}</strong></span>
-      </div>
-      <p class="informacao">LOCAL: {{ publicacao.local }}<br>DATA DA OCORRÊNCIA: {{ publicacao.dataOcorrencia }}</p>
-      <p class="rotulo-descricao">DESCRIÇÃO</p>
-      <p class="descricao">{{ publicacao.descricao }}</p>
-      <p class="contato" *ngIf="contatoVisivel">CONTATO: {{ publicacao.contato }}</p>
-    </section>
+    <p class="descricao" *ngIf="carregando()">Carregando...</p>
+    <p class="descricao" *ngIf="erro()">{{ erro() }}</p>
+
+    <ng-container *ngIf="publicacao() as p">
+      <p class="data-publicacao">Publicado em {{ p.dataCriacao | date:"dd/MM/yyyy 'às' HH:mm" }}</p>
+
+      <section class="cartao-detalhe">
+        <h2>{{ p.nome }}</h2>
+        <div class="linha-status">
+          <span>TIPO: <strong [class.perdido]="p.tipo === 'PERDIDO'" [class.encontrado]="p.tipo === 'ENCONTRADO'">{{ p.tipo | titlecase }}</strong></span>
+          <span>STATUS: <strong [class.ativo]="p.status === 'ATIVA'">{{ p.status | titlecase }}</strong></span>
+        </div>
+        <p class="informacao">LOCAL: {{ p.local?.nome ?? 'Não informado' }}<br>DATA DA OCORRÊNCIA: {{ p.dataOcorrencia | date:'dd/MM/yyyy':'UTC' }}<br>PUBLICADO POR: {{ p.usuario?.nome ?? 'Não informado' }}</p>
+        <p class="rotulo-descricao">DESCRIÇÃO</p>
+        <p class="descricao">{{ p.descricao }}</p>
+        <p class="contato" *ngIf="contatoVisivel()">CONTATO: {{ p.contato || 'Contato não informado' }}</p>
+      </section>
+    </ng-container>
 
     <footer class="acoes">
       <button mat-button class="botao-voltar" type="button" routerLink="/inicio/pesquisar">VOLTAR</button>
-      <button mat-flat-button color="primary" class="botao-contato" type="button" (click)="verContato()">VER CONTATO</button>
+      <button mat-flat-button color="primary" class="botao-contato" type="button" (click)="verContato()" [disabled]="!publicacao()">VER CONTATO</button>
     </footer>
   </main>
 </div>

@@ -1,6 +1,7 @@
 import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -9,6 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
+import { apiInterceptor } from './core/api.interceptor';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,7 @@ import { App } from './app';
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
+    provideHttpClient(withInterceptors([apiInterceptor])),
   ],
   bootstrap: [App]
 })

@@ -5,14 +5,16 @@
       <span class="marca-texto"><strong>UNIFIO</strong><small>ACHADOS E PERDIDOS</small></span>
     </a>
     <button mat-button class="usuario" type="button" routerLink="/inicio/minhas-publicacoes" aria-label="Minhas publicações">
-      <span class="indicador-notificacao"></span><mat-icon>account_circle</mat-icon><span>{{ usuario }}</span>
+      <span class="indicador-notificacao"></span><mat-icon>account_circle</mat-icon><span>{{ auth.nome }}</span>
     </button>
   </header>
 
   <aside class="sidebar" aria-label="Menu principal">
     <a mat-button class="item-menu" routerLink="/inicio/publicar"><mat-icon>add</mat-icon><span>PUBLICAR</span></a>
     <a mat-button class="item-menu" routerLink="/inicio/pesquisar"><mat-icon>search</mat-icon><span>PESQUISAR</span></a>
-    <a mat-button class="item-menu" routerLink="/inicio/configuracoes"><mat-icon>construction</mat-icon><span>CONFIG.</span></a>
+    <button mat-button class="item-menu" type="button" (click)="auth.sair()">
+      <mat-icon>logout</mat-icon><span>SAIR</span>
+    </button>
   </aside>
 
   <main class="conteudo">
@@ -24,23 +26,26 @@
       <mat-button-toggle *ngFor="let f of filtros" [value]="f.valor">{{ f.rotulo }}</mat-button-toggle>
     </mat-button-toggle-group>
 
-    <p class="mensagem" role="status" *ngIf="mensagem">{{ mensagem }}</p>
+    <p class="mensagem" role="status" *ngIf="mensagem()">{{ mensagem() }}</p>
 
     <section class="lista" aria-label="Minhas publicações">
       <mat-card appearance="outlined" class="cartao" *ngFor="let p of lista">
         <mat-card-content>
-          <ng-container *ngIf="editandoId !== p.id; else edicao">
-            <h2>{{ p.titulo }}</h2>
-            <p class="situacao">{{ p.status }} • {{ p.data }}</p>
+          <ng-container *ngIf="editandoId !== p.idPublicacao; else edicao">
+            <h2>{{ p.nome }}</h2>
+            <p class="situacao">{{ p.status | titlecase }} • {{ p.dataCriacao | date:'dd/MM/yyyy' }}</p>
 
-            <div class="acoes" *ngIf="alteravel(p)">
-              <button mat-button type="button" class="editar" (click)="editar(p)">EDITAR</button>
-              <button mat-button type="button" class="finalizar" (click)="finalizar(p)">FINALIZAR</button>
-              <button mat-button type="button" class="cancelar" (click)="cancelar(p)">CANCELAR</button>
+            <div class="acoes">
+              <ng-container *ngIf="alteravel(p)">
+                <button mat-button type="button" class="editar" (click)="editar(p)">EDITAR</button>
+                <button mat-button type="button" class="finalizar" (click)="finalizar(p)">FINALIZAR</button>
+                <button mat-button type="button" class="cancelar" (click)="cancelar(p)">CANCELAR</button>
+              </ng-container>
+              <button mat-button type="button" class="cancelar" (click)="excluir(p)">EXCLUIR</button>
             </div>
 
             <p class="bloqueio" *ngIf="!alteravel(p)">
-              Ocorrência {{ p.status === 'Finalizada' ? 'encerrada' : 'cancelada' }} — alterações bloqueadas
+              Ocorrência {{ p.status === 'FINALIZADA' ? 'encerrada' : 'cancelada' }} — alterações bloqueadas
             </p>
           </ng-container>
 
@@ -65,7 +70,8 @@
         </mat-card-content>
       </mat-card>
 
-      <p class="vazio" *ngIf="lista.length === 0">Nenhuma publicação nesta situação.</p>
+      <p class="vazio" *ngIf="carregando()">Carregando...</p>
+      <p class="vazio" *ngIf="!carregando() && lista.length === 0">Nenhuma publicação nesta situação.</p>
     </section>
 
     <button mat-flat-button class="botao-nova" type="button" routerLink="/inicio/publicar">

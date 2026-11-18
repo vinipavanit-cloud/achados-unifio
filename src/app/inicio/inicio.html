@@ -8,7 +8,7 @@
     <button mat-button class="usuario" type="button" routerLink="/inicio/minhas-publicacoes" aria-label="Minhas publicações">
       <span class="indicador-notificacao"></span>
       <mat-icon>account_circle</mat-icon>
-      <span>{{ usuario }}</span>
+      <span>{{ auth.nome }}</span>
     </button>
   </header>
 
@@ -19,37 +19,43 @@
     <a mat-button class="item-menu" routerLink="/inicio/pesquisar">
       <mat-icon>search</mat-icon><span>PESQUISAR</span>
     </a>
-    <button mat-button class="item-menu" [class.ativo]="menuSelecionado === 'config'" (click)="selecionarMenu('config')">
-      <mat-icon>construction</mat-icon><span>CONFIG.</span>
+    <button mat-button class="item-menu" type="button" (click)="auth.sair()">
+      <mat-icon>logout</mat-icon><span>SAIR</span>
     </button>
   </aside>
 
   <main class="conteudo">
     <section class="faixa-publicacoes" aria-label="Publicações recentes">
-      <article class="card-publicacao" *ngFor="let publicacao of publicacoes">
-        <span class="data-publicacao">{{ publicacao.data }}</span>
-        <h2>{{ publicacao.titulo }}</h2>
-        <p>{{ publicacao.descricao }} <a [routerLink]="['/inicio/detalhe', publicacoes.indexOf(publicacao)]">LER MAIS</a></p>
-        <span class="tipo">Tipo: <strong [class.perdido]="publicacao.tipo === 'Perdido'" [class.encontrado]="publicacao.tipo === 'Encontrado'">{{ publicacao.tipo }}</strong></span>
+      <article class="card-publicacao" *ngFor="let publicacao of recentes()">
+        <span class="data-publicacao">Publicado {{ publicacao.dataCriacao | date:'dd/MM/yyyy HH:mm' }}</span>
+        <h2>{{ publicacao.nome }}</h2>
+        <p>{{ publicacao.descricao | slice:0:70 }}{{ publicacao.descricao.length > 70 ? '...' : '' }} <a [routerLink]="['/inicio/detalhe', publicacao.idPublicacao]">LER MAIS</a></p>
+        <span class="tipo">Tipo: <strong [class.perdido]="publicacao.tipo === 'PERDIDO'" [class.encontrado]="publicacao.tipo === 'ENCONTRADO'">{{ publicacao.tipo | titlecase }}</strong></span>
       </article>
+      <p class="aviso-lista" *ngIf="carregando()">Carregando publicações...</p>
+      <p class="aviso-lista" *ngIf="erro()">{{ erro() }}</p>
+      <p class="aviso-lista" *ngIf="!carregando() && !erro() && recentes().length === 0">Nenhuma publicação ainda. Seja o primeiro a publicar!</p>
     </section>
 
     <div class="barra-decorativa"></div>
     <h3 class="titulo-recentes">Publicações Recentes</h3>
 
     <section class="resumo-usuario">
-      <h1>BEM VINDO! {{ usuario }}</h1>
-      <p>Publicações Feitas: <strong>0</strong></p>
-      <p>Publicações Suas Resolvidas: <strong>0</strong></p>
+      <h1>BEM VINDO! {{ auth.nome }}</h1>
+    </section>
+
+    <section class="kpis" aria-label="Indicadores">
+      <div class="kpi"><span class="kpi-valor">{{ kpis().total }}</span><span class="kpi-rotulo">Publicações no sistema</span></div>
+      <div class="kpi"><span class="kpi-valor">{{ kpis().ativas }}</span><span class="kpi-rotulo">Ativas</span></div>
+      <div class="kpi"><span class="kpi-valor">{{ kpis().finalizadas }}</span><span class="kpi-rotulo">Resolvidas</span></div>
+      <div class="kpi"><span class="kpi-valor">{{ kpis().perdidos }}</span><span class="kpi-rotulo">Itens perdidos</span></div>
+      <div class="kpi"><span class="kpi-valor">{{ kpis().encontrados }}</span><span class="kpi-rotulo">Itens encontrados</span></div>
+      <div class="kpi"><span class="kpi-valor">{{ kpis().minhas }}</span><span class="kpi-rotulo">Suas publicações</span></div>
     </section>
 
     <button mat-flat-button color="primary" class="botao-nova-publicacao" type="button" routerLink="/inicio/publicar">
       <mat-icon>add</mat-icon>
       <span>NOVA<br>PUBLICAÇÃO</span>
     </button>
-
-    <p class="aviso-menu" *ngIf="menuSelecionado !== 'inicio'">
-      A área {{ menuSelecionado === 'config' ? 'de configurações' : menuSelecionado === 'pesquisar' ? 'de pesquisa' : menuSelecionado === 'detalhes' ? 'de detalhes' : 'de publicação' }} será conectada quando recebermos a respectiva tela do Figma e os endpoints do backend.
-    </p>
   </main>
 </div>
