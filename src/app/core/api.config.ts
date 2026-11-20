@@ -1,7 +1,10 @@
+import { isDevMode } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 
-// URL base do backend. Troque pela URL publicada ao fazer o deploy.
-export const API_URL = 'http://localhost:8080';
+const BACKEND_URL =
+  'https://expert-chainsaw-gx59x9x9v7pwh964q-8080.app.github.dev';
+
+export const API_URL = isDevMode() ? '/backend' : BACKEND_URL;
 
 export function mensagemErro(erro: unknown, padrao: string): string {
   if (erro instanceof HttpErrorResponse) {

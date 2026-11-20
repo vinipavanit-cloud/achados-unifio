@@ -24,7 +24,7 @@
   </aside>
 
   <main class="conteudo">
-    <form class="form-pesquisa" (ngSubmit)="$event.preventDefault()">
+    <form class="form-pesquisa" (ngSubmit)="pesquisar()">
       <label for="campo-pesquisa">PESQUISAR</label>
       <div class="campo-com-icone">
         <input id="campo-pesquisa" name="termo" [(ngModel)]="termo"
@@ -52,5 +52,13 @@
         Nenhuma publicação encontrada<span *ngIf="termo"> para "{{ termo }}"</span>.
       </p>
     </section>
+
+    <nav class="paginacao" aria-label="Paginação dos resultados" *ngIf="totalPaginas() > 1">
+      <button mat-button type="button" (click)="mudarPagina(paginaAtual() - 1)"
+        [disabled]="carregando() || paginaAtual() === 0">Anterior</button>
+      <span>Página {{ paginaAtual() + 1 }} de {{ totalPaginas() }}</span>
+      <button mat-button type="button" (click)="mudarPagina(paginaAtual() + 1)"
+        [disabled]="carregando() || paginaAtual() + 1 >= totalPaginas()">Próxima</button>
+    </nav>
   </main>
 </div>

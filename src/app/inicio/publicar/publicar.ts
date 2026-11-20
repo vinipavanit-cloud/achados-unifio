@@ -30,7 +30,12 @@ export class Publicar implements OnInit {
   enviando = signal(false);
 
   ngOnInit(): void {
-    this.localService.listar().subscribe((locais) => this.locais.set(locais));
+    this.localService.listar().subscribe({
+      next: (locais) => this.locais.set(locais),
+      error: (erro) => {
+        this.mensagem.set(mensagemErro(erro, 'Não foi possível carregar os locais.'));
+      },
+    });
   }
 
   enviar(): void {

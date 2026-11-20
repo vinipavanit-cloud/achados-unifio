@@ -37,15 +37,14 @@ export class MinhasPublicacoes implements OnInit {
   }
 
   private carregar(): void {
-    const idUsuario = this.auth.usuario?.idUsuario;
-    this.publicacoesService.listarTodas().subscribe({
+    this.carregando.set(true);
+    this.publicacoesService.minhas().subscribe({
       next: (lista) => {
-        // Enquanto não existir GET /publicacao/minhas, filtramos pelo usuário logado aqui.
-        this.publicacoes.set(lista.filter((p) => p.usuario?.idUsuario === idUsuario));
+        this.publicacoes.set(lista);
         this.carregando.set(false);
       },
-      error: () => {
-        this.mensagem.set('Não foi possível carregar suas publicações.');
+      error: (erro) => {
+        this.mensagem.set(mensagemErro(erro, 'Não foi possível carregar suas publicações.'));
         this.carregando.set(false);
       },
     });

@@ -22,7 +22,11 @@ export class CsrfService {
     return this.cache$;
   }
 
-  // O Spring troca o token ao logar/deslogar; é preciso buscar de novo.
+  renovar(): Observable<string> {
+    this.limpar();
+    return this.token();
+  }
+
   limpar(): void {
     this.cache$ = null;
   }

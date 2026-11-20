@@ -9,12 +9,27 @@ export class PublicacaoService {
   private http = inject(HttpClient);
   private base = `${API_URL}/publicacao`;
 
-  // Traz as publicações mais recentes primeiro. Com poucos dados, uma página grande basta;
-  // quando o backend tiver /publicacao/buscar e /minhas, trocar por elas.
+  // Traz as publicações mais recentes primeiro.
   listarTodas(): Observable<Publicacao[]> {
     const params = new HttpParams().set('page', 0).set('size', 1000).set('sort', 'idPublicacao,desc');
     return this.http
       .get<Page<Publicacao>>(`${this.base}/listarTodos`, { params })
+      .pipe(map((pagina) => pagina.content));
+  }
+
+  buscarPorNome(nome: string, page = 0): Observable<Page<Publicacao>> {
+    const params = new HttpParams()
+      .set('nome', nome)
+      .set('page', page)
+      .set('size', 10)
+      .set('sort', 'nome');
+    return this.http.get<Page<Publicacao>>(`${this.base}/buscarPorNome`, { params });
+  }
+
+  minhas(): Observable<Publicacao[]> {
+    const params = new HttpParams().set('page', 0).set('size', 1000).set('sort', 'idPublicacao,desc');
+    return this.http
+      .get<Page<Publicacao>>(`${this.base}/minhas`, { params })
       .pipe(map((pagina) => pagina.content));
   }
 
@@ -26,7 +41,6 @@ export class PublicacaoService {
     return this.http.post<Publicacao>(this.base, dados);
   }
 
-  // PUT e DELETE ainda precisam ser criados no backend.
   atualizar(id: number, dados: PublicacaoRequest): Observable<Publicacao> {
     return this.http.put<Publicacao>(`${this.base}/${id}`, dados);
   }

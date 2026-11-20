@@ -1,22 +1,141 @@
-:host { display: block; min-height: 100vh; }
-.pagina-nova-senha { min-height: 100vh; background: #fbfeff; color: #4a1717; font-family: Arial, sans-serif; }
-.cabecalho-nova-senha { padding: 5px 4px; }
-.marca-unifio { display: inline-flex; align-items: center; width: 226px; height: 60px; color: inherit; text-decoration: none; }
-.icone-marca { display: flex; align-items: center; justify-content: center; width: 59px; height: 59px; background: #e8f8fb; color: #000; }
-.icone-marca mat-icon { width: 46px; height: 46px; font-size: 46px; }
-.texto-marca { display: flex; flex-direction: column; padding-left: 26px; }
-.nome-unifio { color: #0787ff; font-size: 30px; line-height: 31px; letter-spacing: 1px; font-weight: 400; }
-.descricao-marca { color: #111; font-size: 8px; margin-left: 2px; }
-.conteudo-nova-senha { display: flex; justify-content: center; padding: 116px 20px 40px; }
-.formulario-nova-senha { width: 480px; max-width: 100%; }
-h1 { margin: 0 0 5px; font-size: 25px; line-height: 30px; font-weight: 700; }
-.subtitulo { margin: 0 0 8px; font-size: 13px; }
-label { display: block; margin: 0 0 3px; font-size: 11px; }
-.obrigatorio { color: #d32f2f; }
-.campo-senha { display: block; width: 100%; margin-bottom: 3px; }
-.campo-senha input { color: #222; font-size: 11px; }
-.campo-senha button { color: #111; }
-.botao-confirmar { width: 261px; height: 29px; min-height: 29px; margin-top: 2px; border: 1px solid #111; border-radius: 0; background: #10a3cf !important; color: #fff !important; font-size: 16px; font-weight: 400; }
-.mensagem { margin: 10px 0 0; color: #b3261e; font-size: 12px; }
-.mensagem-aviso { color: #795500; }
-@media (max-width: 560px) { .conteudo-nova-senha { padding-top: 90px; } .botao-confirmar { width: 100%; } }
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.pagina-nova-senha {
+  min-height: 100vh;
+  background: #fbfeff;
+  color: #4a1717;
+  font-family: Arial, sans-serif;
+}
+
+.cabecalho-nova-senha {
+  padding: 5px 4px;
+}
+
+.marca-unifio {
+  display: inline-flex;
+  align-items: center;
+  width: 226px;
+  height: 60px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.icone-marca {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 59px;
+  height: 59px;
+  background: #e8f8fb;
+  color: #000;
+}
+
+.icone-marca mat-icon {
+  width: 46px;
+  height: 46px;
+  font-size: 46px;
+}
+
+.texto-marca {
+  display: flex;
+  flex-direction: column;
+  padding-left: 26px;
+}
+
+.nome-unifio {
+  color: #0787ff;
+  font-size: 30px;
+  line-height: 31px;
+  letter-spacing: 1px;
+  font-weight: 400;
+}
+
+.descricao-marca {
+  color: #111;
+  font-size: 8px;
+  margin-left: 2px;
+}
+
+.conteudo-nova-senha {
+  display: flex;
+  justify-content: center;
+  padding: 116px 20px 40px;
+}
+
+.formulario-nova-senha {
+  width: 480px;
+  max-width: 100%;
+}
+
+h1 {
+  margin: 0 0 5px;
+  font-size: 25px;
+  line-height: 30px;
+  font-weight: 700;
+}
+
+.subtitulo {
+  margin: 0 0 8px;
+  font-size: 13px;
+}
+
+label {
+  display: block;
+  margin: 0 0 3px;
+  font-size: 11px;
+}
+
+.obrigatorio {
+  color: #d32f2f;
+}
+
+.campo-senha {
+  display: block;
+  width: 100%;
+  margin-bottom: 3px;
+}
+
+.campo-senha input {
+  color: #222;
+  font-size: 11px;
+}
+
+.campo-senha button {
+  color: #111;
+}
+
+.botao-confirmar {
+  width: 261px;
+  height: 29px;
+  min-height: 29px;
+  margin-top: 2px;
+  border: 1px solid #111;
+  border-radius: 0;
+  background: #10a3cf !important;
+  color: #fff !important;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.mensagem {
+  margin: 10px 0 0;
+  color: #b3261e;
+  font-size: 12px;
+}
+
+.mensagem-aviso {
+  color: #795500;
+}
+
+@media (max-width: 560px) {
+  .conteudo-nova-senha {
+    padding-top: 90px;
+  }
+
+  .botao-confirmar {
+    width: 100%;
+  }
+}

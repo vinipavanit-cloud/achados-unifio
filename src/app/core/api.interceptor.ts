@@ -6,7 +6,7 @@ import { API_URL } from './api.config';
 import { AuthService } from './auth.service';
 import { CsrfService } from './csrf.service';
 
-// Envia cookies de sessão e o token CSRF em toda chamada de escrita ao backend.
+
 export const apiInterceptor: HttpInterceptorFn = (req, next) => {
   if (!req.url.startsWith(API_URL)) return next(req);
 
