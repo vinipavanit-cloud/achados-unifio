@@ -19,6 +19,7 @@
     <a mat-button class="item-menu" routerLink="/inicio/pesquisar">
       <mat-icon>search</mat-icon><span>PESQUISAR</span>
     </a>
+    <a mat-button class="item-menu" routerLink="/inicio/dashboard" *ngIf="auth.admin"><mat-icon>dashboard</mat-icon><span>DASHBOARD</span></a>
     <button mat-button class="item-menu" type="button" (click)="auth.sair()">
       <mat-icon>logout</mat-icon><span>SAIR</span>
     </button>
@@ -44,14 +45,6 @@
       <h1>BEM VINDO! {{ auth.nome }}</h1>
     </section>
 
-    <section class="kpis" aria-label="Indicadores">
-      <div class="kpi"><span class="kpi-valor">{{ kpis().total }}</span><span class="kpi-rotulo">Publicações no sistema</span></div>
-      <div class="kpi"><span class="kpi-valor">{{ kpis().ativas }}</span><span class="kpi-rotulo">Ativas</span></div>
-      <div class="kpi"><span class="kpi-valor">{{ kpis().finalizadas }}</span><span class="kpi-rotulo">Resolvidas</span></div>
-      <div class="kpi"><span class="kpi-valor">{{ kpis().perdidos }}</span><span class="kpi-rotulo">Itens perdidos</span></div>
-      <div class="kpi"><span class="kpi-valor">{{ kpis().encontrados }}</span><span class="kpi-rotulo">Itens encontrados</span></div>
-      <div class="kpi"><span class="kpi-valor">{{ kpis().minhas }}</span><span class="kpi-rotulo">Suas publicações</span></div>
-    </section>
 
     <button mat-flat-button color="primary" class="botao-nova-publicacao" type="button" routerLink="/inicio/publicar">
       <mat-icon>add</mat-icon>

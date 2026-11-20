@@ -1,3 +1,4 @@
+
 :host {
   display: block;
   min-height: 100vh;
@@ -11,29 +12,29 @@
 }
 
 .topbar {
-  height: 47px;
+  height: 63px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 10px 0 5px;
+  padding: 0 14px 0 7px;
   background: #dce8ec;
   border-bottom: 1px solid #b8c9cf;
   box-sizing: border-box;
 }
 
 .marca {
-  height: 39px;
+  height: 53px;
   display: inline-flex;
   align-items: center;
   text-decoration: none;
   color: inherit;
   background: #f7fcfd;
-  min-width: 122px;
+  min-width: 165px;
 }
 
 .marca-icone {
-  height: 34px;
-  width: 34px;
+  height: 46px;
+  width: 46px;
   display: grid;
   place-items: center;
   background: #e5f6f8;
@@ -41,51 +42,51 @@
 }
 
 .marca-icone mat-icon {
-  font-size: 27px;
-  width: 27px;
-  height: 27px;
+  font-size: 36px;
+  width: 36px;
+  height: 36px;
 }
 
 .marca-texto {
   display: flex;
   flex-direction: column;
-  padding-left: 9px;
+  padding-left: 12px;
   line-height: 1;
 }
 
 .marca-texto strong {
   color: #0785ed;
-  font-size: 17px;
+  font-size: 23px;
   font-weight: 400;
   letter-spacing: 1px;
 }
 
 .marca-texto small {
   color: #111;
-  font-size: 5px;
-  margin-top: 4px;
+  font-size: 7px;
+  margin-top: 5px;
 }
 
 .usuario {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 4px;
-  font-size: 12px;
+  gap: 5px;
+  font-size: 16px;
   color: #222;
   padding: 0 2px;
 }
 
 .usuario mat-icon {
-  font-size: 25px;
-  width: 25px;
-  height: 25px;
+  font-size: 34px;
+  width: 34px;
+  height: 34px;
 }
 
 .indicador-notificacao {
   position: absolute;
-  width: 5px;
-  height: 5px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: #f00;
   top: 0;
@@ -94,79 +95,79 @@
 
 .sidebar {
   position: absolute;
-  top: 47px;
+  top: 63px;
   bottom: 0;
   left: 0;
-  width: 132px;
+  width: 178px;
   background: #dce8ec;
   display: flex;
   flex-direction: column;
 }
 
 .item-menu {
-  height: 47px;
+  height: 63px;
   border-radius: 0;
   background: #08a3d0;
   color: white;
   border-bottom: 1px solid #161616;
   display: flex;
   justify-content: flex-start;
-  padding: 0 6px;
-  gap: 7px;
-  font-size: 14px;
+  padding: 0 8px;
+  gap: 9px;
+  font-size: 19px;
   font-weight: 400;
   text-decoration: none;
 }
 
 .item-menu mat-icon {
-  font-size: 30px;
-  width: 30px;
-  height: 30px;
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
 }
 
 .conteudo {
-  margin-left: 132px;
-  min-height: calc(100vh - 47px);
-  padding: 16px 28px 40px;
+  margin-left: 178px;
+  min-height: calc(100vh - 63px);
+  padding: 22px 38px 54px;
   box-sizing: border-box;
 }
 
 .conteudo h1 {
   margin: 0;
   color: #303030;
-  font-size: 25px;
-  line-height: 31px;
+  font-size: 34px;
+  line-height: 42px;
   font-weight: 400;
 }
 
 .data-publicacao {
   color: #541c1c;
-  font-size: 11px;
-  margin: 0 0 11px;
+  font-size: 15px;
+  margin: 0 0 15px;
 }
 
 .cartao-detalhe {
-  width: min(590px, 100%);
-  min-height: 260px;
+  width: min(796px, 100%);
+  min-height: 351px;
   box-sizing: border-box;
-  padding: 22px 24px;
-  border-radius: 6px;
+  padding: 30px 32px;
+  border-radius: 8px;
   background: #7899a8;
   color: white;
 }
 
 .cartao-detalhe h2 {
-  margin: 0 0 16px;
-  font-size: 21px;
-  line-height: 25px;
+  margin: 0 0 22px;
+  font-size: 28px;
+  line-height: 34px;
   font-weight: 400;
 }
 
 .linha-status {
   display: flex;
-  gap: 18px;
-  font-size: 12px;
-  margin-bottom: 15px;
+  gap: 24px;
+  font-size: 16px;
+  margin-bottom: 20px;
 }
 
 .linha-status strong {
@@ -183,56 +184,56 @@
 }
 
 .informacao {
-  font-size: 12px;
-  line-height: 16px;
-  margin: 0 0 14px;
+  font-size: 16px;
+  line-height: 22px;
+  margin: 0 0 19px;
 }
 
 .rotulo-descricao {
-  font-size: 12px;
+  font-size: 16px;
   margin: 0;
 }
 
 .descricao {
-  font-size: 12px;
-  line-height: 16px;
+  font-size: 16px;
+  line-height: 22px;
   margin: 0;
 }
 
 .contato {
-  margin: 12px 0 0;
-  font-size: 12px;
+  margin: 16px 0 0;
+  font-size: 16px;
   font-weight: 500;
 }
 
 .acoes {
-  width: min(590px, 100%);
+  width: min(796px, 100%);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 28px 16px 0;
+  padding: 38px 22px 0;
   box-sizing: border-box;
 }
 
 .botao-voltar {
-  width: 112px;
-  height: 32px;
+  width: 151px;
+  height: 43px;
   background: #c4c4c4;
   color: #222;
-  font-size: 12px;
+  font-size: 16px;
 }
 
 .botao-contato {
-  width: 131px;
-  height: 32px;
+  width: 177px;
+  height: 43px;
   background: #08a3d0 !important;
   color: white !important;
-  font-size: 12px;
+  font-size: 16px;
 }
 
 @media (max-width: 700px) {
   .sidebar {
-    width: 58px;
+    width: 78px;
   }
 
   .item-menu {
@@ -245,17 +246,17 @@
   }
 
   .conteudo {
-    margin-left: 58px;
-    padding: 20px 15px;
+    margin-left: 78px;
+    padding: 27px 20px;
   }
 
   .conteudo h1 {
-    font-size: 20px;
+    font-size: 27px;
   }
 
   .cartao-detalhe {
-    padding: 18px;
-    min-height: 250px;
+    padding: 24px;
+    min-height: 338px;
   }
 
   .acoes {

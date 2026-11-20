@@ -48,6 +48,7 @@ export interface UsuarioLogado {
   idUsuario?: number;
   nome: string;
   email: string;
+  permissao?: string;
 }
 
 export interface Kpis {

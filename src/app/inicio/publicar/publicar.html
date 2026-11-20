@@ -11,6 +11,7 @@
   <aside class="sidebar" aria-label="Menu principal">
     <a mat-button class="item-menu ativo" routerLink="/inicio/publicar"><mat-icon>add</mat-icon><span>PUBLICAR</span></a>
     <a mat-button class="item-menu" routerLink="/inicio/pesquisar"><mat-icon>search</mat-icon><span>PESQUISAR</span></a>
+    <a mat-button class="item-menu" routerLink="/inicio/dashboard" *ngIf="auth.admin"><mat-icon>dashboard</mat-icon><span>DASHBOARD</span></a>
     <button mat-button class="item-menu" type="button" (click)="auth.sair()">
       <mat-icon>logout</mat-icon><span>SAIR</span>
     </button>
@@ -37,7 +38,10 @@
         </mat-form-field>
         <label for="data">Data<span>*</span></label>
         <mat-form-field appearance="outline" class="campo campo-data">
-          <input matInput id="data" name="data" type="date" [(ngModel)]="data" required />
+          <input matInput id="data" name="data" [matDatepicker]="seletorData" [max]="hoje" [(ngModel)]="data"
+            placeholder="dd/mm/aaaa" readonly required (click)="seletorData.open()" />
+          <mat-datepicker-toggle matIconSuffix [for]="seletorData"></mat-datepicker-toggle>
+          <mat-datepicker #seletorData></mat-datepicker>
         </mat-form-field>
         <label for="descricao">Descrição<span>*</span></label>
         <mat-form-field appearance="outline" class="campo campo-descricao">

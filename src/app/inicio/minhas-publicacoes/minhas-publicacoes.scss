@@ -1,3 +1,4 @@
+
 :host {
   display: block;
   min-height: 100vh;
@@ -11,29 +12,29 @@
 }
 
 .topbar {
-  height: 47px;
+  height: 63px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 10px 0 5px;
+  padding: 0 14px 0 7px;
   background: #dce8ec;
   border-bottom: 1px solid #b8c9cf;
   box-sizing: border-box;
 }
 
 .marca {
-  height: 39px;
+  height: 53px;
   display: inline-flex;
   align-items: center;
   text-decoration: none;
   color: inherit;
   background: #f7fcfd;
-  min-width: 122px;
+  min-width: 165px;
 }
 
 .marca-icone {
-  height: 34px;
-  width: 34px;
+  height: 46px;
+  width: 46px;
   display: grid;
   place-items: center;
   background: #e5f6f8;
@@ -41,51 +42,51 @@
 }
 
 .marca-icone mat-icon {
-  font-size: 27px;
-  width: 27px;
-  height: 27px;
+  font-size: 36px;
+  width: 36px;
+  height: 36px;
 }
 
 .marca-texto {
   display: flex;
   flex-direction: column;
-  padding-left: 9px;
+  padding-left: 12px;
   line-height: 1;
 }
 
 .marca-texto strong {
   color: #0785ed;
-  font-size: 17px;
+  font-size: 23px;
   font-weight: 400;
   letter-spacing: 1px;
 }
 
 .marca-texto small {
   color: #111;
-  font-size: 5px;
-  margin-top: 4px;
+  font-size: 7px;
+  margin-top: 5px;
 }
 
 .usuario {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 4px;
-  font-size: 14px;
+  gap: 5px;
+  font-size: 19px;
   color: #222;
   padding: 0 2px;
 }
 
 .usuario mat-icon {
-  font-size: 25px;
-  width: 25px;
-  height: 25px;
+  font-size: 34px;
+  width: 34px;
+  height: 34px;
 }
 
 .indicador-notificacao {
   position: absolute;
-  width: 5px;
-  height: 5px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: #f00;
   top: 0;
@@ -94,73 +95,73 @@
 
 .sidebar {
   position: absolute;
-  top: 47px;
+  top: 63px;
   bottom: 0;
   left: 0;
-  width: 132px;
+  width: 178px;
   background: #dce8ec;
   display: flex;
   flex-direction: column;
 }
 
 .item-menu {
-  height: 47px;
+  height: 63px;
   border-radius: 0;
   background: #08a3d0;
   color: white;
   border-bottom: 1px solid #161616;
   display: flex;
   justify-content: flex-start;
-  padding: 0 6px;
-  gap: 7px;
-  font-size: 14px;
+  padding: 0 8px;
+  gap: 9px;
+  font-size: 19px;
   font-weight: 400;
   text-decoration: none;
 }
 
 .item-menu mat-icon {
-  font-size: 30px;
-  width: 30px;
-  height: 30px;
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
 }
 
 .conteudo {
-  margin-left: 132px;
-  min-height: calc(100vh - 47px);
-  padding: 16px 28px 40px;
+  margin-left: 178px;
+  min-height: calc(100vh - 63px);
+  padding: 22px 38px 54px;
   box-sizing: border-box;
-  max-width: 760px;
+  max-width: 1026px;
 }
 
 h1 {
   margin: 0;
   color: #303030;
-  font-size: 25px;
-  line-height: 31px;
+  font-size: 34px;
+  line-height: 42px;
   font-weight: 400;
 }
 
 .subtitulo {
-  margin: 0 0 16px;
+  margin: 0 0 22px;
   color: #541c1c;
-  font-size: 14px;
+  font-size: 19px;
 }
 
 .filtros {
-  margin-bottom: 16px;
+  margin-bottom: 22px;
   flex-wrap: wrap;
 }
 
 .mensagem {
-  margin: 0 0 12px;
+  margin: 0 0 16px;
   color: #541c1c;
-  font-size: 14px;
+  font-size: 19px;
 }
 
 .lista {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 22px;
 }
 
 .cartao {
@@ -171,30 +172,30 @@ h1 {
 
 .cartao h2 {
   margin: 0;
-  font-size: 16px;
+  font-size: 22px;
   font-weight: 400;
 }
 
 .situacao {
   margin: 2px 0 0;
-  font-size: 14px;
+  font-size: 19px;
 }
 
 .bloqueio {
   margin: 2px 0 0;
-  font-size: 14px;
+  font-size: 19px;
 }
 
 .acoes {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
-  margin-top: 4px;
-  margin-left: -8px;
+  gap: 5px;
+  margin-top: 5px;
+  margin-left: -11px;
 }
 
 .acoes button {
-  font-size: 14px;
+  font-size: 19px;
 }
 
 .editar {
@@ -212,17 +213,17 @@ h1 {
 .vazio {
   margin: 0;
   color: #541c1c;
-  font-size: 14px;
+  font-size: 19px;
 }
 
 .edicao {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 11px;
   background: #fff;
   color: #222;
-  padding: 16px 16px 8px;
-  border-radius: 6px;
+  padding: 22px 22px 11px;
+  border-radius: 8px;
 }
 
 .edicao mat-form-field {
@@ -232,13 +233,13 @@ h1 {
 .acoes-edicao {
   display: flex;
   justify-content: flex-end;
-  gap: 8px;
+  gap: 11px;
   flex-wrap: wrap;
-  padding-bottom: 8px;
+  padding-bottom: 11px;
 }
 
 .botao-nova {
-  margin-top: 32px;
+  margin-top: 43px;
   float: right;
   background: #08a3d0;
   color: #fff;
@@ -246,7 +247,7 @@ h1 {
 
 @media (max-width: 700px) {
   .sidebar {
-    width: 58px;
+    width: 78px;
   }
 
   .item-menu {
@@ -259,12 +260,12 @@ h1 {
   }
 
   .conteudo {
-    margin-left: 58px;
-    padding: 20px 16px;
+    margin-left: 78px;
+    padding: 27px 22px;
   }
 
   h1 {
-    font-size: 20px;
+    font-size: 27px;
   }
 
   .usuario span:last-child {

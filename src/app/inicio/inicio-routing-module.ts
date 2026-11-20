@@ -5,6 +5,8 @@ import { Pesquisa } from './pesquisa/pesquisa';
 import { Publicar } from './publicar/publicar';
 import { Detalhe } from './detalhe/detalhe';
 import { MinhasPublicacoes } from './minhas-publicacoes/minhas-publicacoes';
+import { Dashboard } from './dashboard/dashboard';
+import { adminGuard } from '../core/admin.guard';
 
 const routes: Routes = [
   {
@@ -25,6 +27,10 @@ const routes: Routes = [
 
   {
     path: 'minhas-publicacoes', component: MinhasPublicacoes
+  },
+
+  {
+    path: 'dashboard', component: Dashboard, canActivate: [adminGuard]
   }
 ];
 

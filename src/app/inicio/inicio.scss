@@ -1,3 +1,4 @@
+
 :host {
   display: block;
   min-height: 100vh;
@@ -11,29 +12,29 @@
 }
 
 .topbar {
-  height: 47px;
+  height: 63px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 10px 0 5px;
+  padding: 0 14px 0 7px;
   background: #dce8ec;
   border-bottom: 1px solid #b8c9cf;
   box-sizing: border-box;
 }
 
 .marca {
-  height: 39px;
+  height: 53px;
   display: inline-flex;
   align-items: center;
   text-decoration: none;
   color: inherit;
   background: #f7fcfd;
-  min-width: 122px;
+  min-width: 165px;
 }
 
 .marca-icone {
-  height: 34px;
-  width: 34px;
+  height: 46px;
+  width: 46px;
   display: grid;
   place-items: center;
   background: #e5f6f8;
@@ -41,52 +42,52 @@
 }
 
 .marca-icone mat-icon {
-  font-size: 27px;
-  width: 27px;
-  height: 27px;
+  font-size: 36px;
+  width: 36px;
+  height: 36px;
 }
 
 .marca-texto {
   display: flex;
   flex-direction: column;
-  padding-left: 9px;
+  padding-left: 12px;
   line-height: 1;
 }
 
 .marca-texto strong {
   color: #0785ed;
-  font-size: 17px;
+  font-size: 23px;
   font-weight: 400;
   letter-spacing: 1px;
 }
 
 .marca-texto small {
   color: #111;
-  font-size: 5px;
-  margin-top: 4px;
+  font-size: 7px;
+  margin-top: 5px;
 }
 
 .usuario {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 4px;
-  font-size: 12px;
+  gap: 5px;
+  font-size: 16px;
   color: #222;
   padding: 0 2px;
   min-width: 0;
 }
 
 .usuario mat-icon {
-  font-size: 25px;
-  width: 25px;
-  height: 25px;
+  font-size: 34px;
+  width: 34px;
+  height: 34px;
 }
 
 .indicador-notificacao {
   position: absolute;
-  width: 5px;
-  height: 5px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: #f00;
   top: 0;
@@ -95,33 +96,33 @@
 
 .sidebar {
   position: absolute;
-  top: 47px;
+  top: 63px;
   bottom: 0;
   left: 0;
-  width: 132px;
+  width: 178px;
   background: #dce8ec;
   display: flex;
   flex-direction: column;
 }
 
 .item-menu {
-  height: 47px;
+  height: 63px;
   border-radius: 0;
   background: #08a3d0;
   color: white;
   border-bottom: 1px solid #161616;
   display: flex;
   justify-content: flex-start;
-  padding: 0 6px;
-  gap: 7px;
-  font-size: 14px;
+  padding: 0 8px;
+  gap: 9px;
+  font-size: 19px;
   font-weight: 400;
 }
 
 .item-menu mat-icon {
-  font-size: 30px;
-  width: 30px;
-  height: 30px;
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
 }
 
 .item-menu.ativo {
@@ -129,28 +130,28 @@
 }
 
 .conteudo {
-  margin-left: 132px;
-  min-height: calc(100vh - 47px);
-  padding: 20px 7px 30px;
+  margin-left: 178px;
+  min-height: calc(100vh - 63px);
+  padding: 27px 9px 40px;
   box-sizing: border-box;
   position: relative;
 }
 
 .faixa-publicacoes {
   display: grid;
-  grid-template-columns: repeat(3, minmax(190px, 1fr));
-  gap: 13px;
+  grid-template-columns: repeat(3, minmax(256px, 1fr));
+  gap: 18px;
   overflow-x: auto;
   padding-bottom: 2px;
 }
 
 .card-publicacao {
-  min-height: 151px;
-  border-radius: 5px;
+  min-height: 204px;
+  border-radius: 7px;
   background: #7899a8;
   color: white;
   box-sizing: border-box;
-  padding: 4px 7px 9px;
+  padding: 5px 9px 12px;
   text-align: center;
 }
 
@@ -158,22 +159,22 @@
   display: block;
   color: #111;
   text-align: left;
-  font-size: 10px;
+  font-size: 14px;
 }
 
 .card-publicacao h2 {
-  font-size: 16px;
-  line-height: 19px;
+  font-size: 22px;
+  line-height: 26px;
   font-weight: 400;
-  margin: 5px 7px 8px;
-  min-height: 38px;
+  margin: 7px 9px 11px;
+  min-height: 51px;
 }
 
 .card-publicacao p {
-  font-size: 11px;
-  line-height: 14px;
-  margin: 0 auto 9px;
-  max-width: 210px;
+  font-size: 15px;
+  line-height: 19px;
+  margin: 0 auto 12px;
+  max-width: 284px;
 }
 
 .card-publicacao a {
@@ -185,7 +186,7 @@
 .tipo {
   display: block;
   text-align: left;
-  font-size: 10px;
+  font-size: 14px;
   color: #222;
 }
 
@@ -202,36 +203,36 @@
 }
 
 .barra-decorativa {
-  height: 5px;
-  width: 161px;
+  height: 7px;
+  width: 217px;
   background: #c4c4c4;
-  border-radius: 4px;
-  margin-top: 8px;
+  border-radius: 5px;
+  margin-top: 11px;
 }
 
 .titulo-recentes {
-  font-size: 16px;
+  font-size: 22px;
   font-weight: 400;
   text-align: center;
-  margin: 19px 0 38px;
+  margin: 26px 0 51px;
 }
 
 .resumo-usuario {
-  padding: 0 25px;
+  padding: 0 34px;
   color: #541c1c;
 }
 
 .resumo-usuario h1 {
-  font-size: 24px;
+  font-size: 32px;
   font-weight: 600;
   text-align: center;
-  margin: 0 0 16px;
+  margin: 0 0 22px;
 }
 
 .resumo-usuario p {
-  font-size: 24px;
+  font-size: 32px;
   font-weight: 600;
-  margin: 0 0 14px;
+  margin: 0 0 19px;
 }
 
 .resumo-usuario strong {
@@ -240,34 +241,40 @@
 
 .botao-nova-publicacao {
   position: absolute;
-  right: 31px;
-  bottom: 30px;
-  min-width: 143px;
-  height: 33px;
-  border-radius: 6px;
-  line-height: 14px;
-  font-size: 11px;
+  right: 42px;
+  bottom: 40px;
+  min-width: 193px;
+  height: 45px;
+  border-radius: 8px;
+  line-height: 19px;
+  font-size: 15px;
 }
 
 .botao-nova-publicacao mat-icon {
-  font-size: 30px;
-  width: 30px;
-  height: 30px;
-  margin-right: 7px;
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  margin-right: 9px;
 }
 
 .aviso-menu {
-  margin: 20px 25px 0;
-  padding: 10px;
+  margin: 27px 34px 0;
+  padding: 14px;
   background: #e8f5fa;
-  border-left: 3px solid #08a3d0;
-  font-size: 12px;
+  border-left: 4px solid #08a3d0;
+  font-size: 16px;
   color: #25434f;
+}
+
+.aviso-lista {
+  grid-column: 1 / -1;
+  font-size: 19px;
+  color: #555;
 }
 
 @media (max-width: 700px) {
   .sidebar {
-    width: 58px;
+    width: 78px;
   }
 
   .item-menu {
@@ -280,65 +287,24 @@
   }
 
   .conteudo {
-    margin-left: 58px;
+    margin-left: 78px;
   }
 
   .faixa-publicacoes {
-    grid-template-columns: repeat(3, 210px);
+    grid-template-columns: repeat(3, 284px);
   }
 
   .resumo-usuario {
-    padding: 0 10px;
+    padding: 0 14px;
   }
 
-  .resumo-usuario h1, .resumo-usuario p {
-    font-size: 19px;
+  .resumo-usuario h1,
+  .resumo-usuario p {
+    font-size: 26px;
   }
 
   .botao-nova-publicacao {
-    right: 12px;
-    bottom: 15px;
-  }
-}
-
-.kpis {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  padding: 0 25px;
-  max-width: 760px;
-  margin: 8px 0 90px;
-}
-
-.kpi {
-  display: flex;
-  flex-direction: column;
-  padding: 12px 14px;
-  border: 1px solid #d9d9d9;
-  border-radius: 8px;
-  background: #fff;
-}
-
-.kpi-valor {
-  font-size: 28px;
-  font-weight: 600;
-  color: #541c1c;
-}
-
-.kpi-rotulo {
-  font-size: 13px;
-  color: #555;
-}
-
-.aviso-lista {
-  grid-column: 1 / -1;
-  font-size: 14px;
-  color: #555;
-}
-
-@media (max-width: 700px) {
-  .kpis {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    padding: 0 10px;
+    right: 16px;
+    bottom: 20px;
   }
 }

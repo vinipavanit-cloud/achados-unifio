@@ -1,7 +1,7 @@
 import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { AuthService } from '../core/auth.service';
 import { Publicacao } from '../core/models';
-import { PublicacaoService, calcularKpis } from '../core/publicacao.service';
+import { PublicacaoService } from '../core/publicacao.service';
 
 @Component({
   selector: 'app-inicio',
@@ -18,7 +18,6 @@ export class Inicio implements OnInit {
   erro = signal('');
 
   recentes = computed(() => this.publicacoes().slice(0, 3));
-  kpis = computed(() => calcularKpis(this.publicacoes(), this.auth.usuario?.idUsuario));
 
   ngOnInit(): void {
     this.publicacoesService.listarTodas().subscribe({

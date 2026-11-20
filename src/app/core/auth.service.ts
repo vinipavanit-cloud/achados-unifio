@@ -24,6 +24,11 @@ export class AuthService {
     return this.usuario?.nome ?? '';
   }
 
+  // Aceita "ADMIN" e "ROLE_ADMIN". Sessões antigas, sem permissão guardada, não são admin.
+  get admin(): boolean {
+    return /admin/i.test(this.usuario?.permissao ?? '');
+  }
+
   cadastrar(nome: string, email: string, senha: string): Observable<UsuarioResumo> {
     return this.csrf.token().pipe(
       switchMap(() =>
@@ -52,6 +57,7 @@ export class AuthService {
           idUsuario: me.idUsuario,
           nome: me.nome,
           email: me.email,
+          permissao: me.permissao,
         };
         this.guardar(usuario);
         return usuario;

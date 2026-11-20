@@ -1,3 +1,4 @@
+
 :host {
   display: block;
   min-height: 100vh;
@@ -11,29 +12,29 @@
 }
 
 .topbar {
-  height: 47px;
+  height: 63px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 10px 0 5px;
+  padding: 0 14px 0 7px;
   background: #dce8ec;
   border-bottom: 1px solid #b8c9cf;
   box-sizing: border-box;
 }
 
 .marca {
-  height: 39px;
+  height: 53px;
   display: inline-flex;
   align-items: center;
   text-decoration: none;
   color: inherit;
   background: #f7fcfd;
-  min-width: 122px;
+  min-width: 165px;
 }
 
 .marca-icone {
-  height: 34px;
-  width: 34px;
+  height: 46px;
+  width: 46px;
   display: grid;
   place-items: center;
   background: #e5f6f8;
@@ -41,51 +42,51 @@
 }
 
 .marca-icone mat-icon {
-  font-size: 27px;
-  width: 27px;
-  height: 27px;
+  font-size: 36px;
+  width: 36px;
+  height: 36px;
 }
 
 .marca-texto {
   display: flex;
   flex-direction: column;
-  padding-left: 9px;
+  padding-left: 12px;
   line-height: 1;
 }
 
 .marca-texto strong {
   color: #0785ed;
-  font-size: 17px;
+  font-size: 23px;
   font-weight: 400;
   letter-spacing: 1px;
 }
 
 .marca-texto small {
   color: #111;
-  font-size: 5px;
-  margin-top: 4px;
+  font-size: 7px;
+  margin-top: 5px;
 }
 
 .usuario {
   position: relative;
   display: flex;
   align-items: center;
-  gap: 4px;
-  font-size: 12px;
+  gap: 5px;
+  font-size: 16px;
   color: #222;
   padding: 0 2px;
 }
 
 .usuario mat-icon {
-  font-size: 25px;
-  width: 25px;
-  height: 25px;
+  font-size: 34px;
+  width: 34px;
+  height: 34px;
 }
 
 .indicador-notificacao {
   position: absolute;
-  width: 5px;
-  height: 5px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
   background: #f00;
   top: 0;
@@ -94,34 +95,34 @@
 
 .sidebar {
   position: absolute;
-  top: 47px;
+  top: 63px;
   bottom: 0;
   left: 0;
-  width: 132px;
+  width: 178px;
   background: #dce8ec;
   display: flex;
   flex-direction: column;
 }
 
 .item-menu {
-  height: 47px;
+  height: 63px;
   border-radius: 0;
   background: #08a3d0;
   color: white;
   border-bottom: 1px solid #161616;
   display: flex;
   justify-content: flex-start;
-  padding: 0 6px;
-  gap: 7px;
-  font-size: 14px;
+  padding: 0 8px;
+  gap: 9px;
+  font-size: 19px;
   font-weight: 400;
   text-decoration: none;
 }
 
 .item-menu mat-icon {
-  font-size: 30px;
-  width: 30px;
-  height: 30px;
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
 }
 
 .item-menu.ativo {
@@ -129,28 +130,28 @@
 }
 
 .conteudo {
-  margin-left: 132px;
-  min-height: calc(100vh - 47px);
-  padding: 28px 28px 40px;
+  margin-left: 178px;
+  min-height: calc(100vh - 63px);
+  padding: 38px 38px 54px;
   box-sizing: border-box;
 }
 
 .formulario-publicar {
-  max-width: 480px;
+  max-width: 648px;
 }
 
 .formulario-publicar h1 {
   color: #541c1c;
-  font-size: 25px;
-  line-height: 30px;
+  font-size: 34px;
+  line-height: 40px;
   font-weight: 600;
   margin: 0;
 }
 
 .subtitulo {
   color: #541c1c;
-  font-size: 12px;
-  margin: 0 0 17px;
+  font-size: 16px;
+  margin: 0 0 23px;
 }
 
 form {
@@ -161,7 +162,7 @@ form {
 
 form label {
   color: #541c1c;
-  font-size: 11px;
+  font-size: 15px;
   margin: 0 0 1px;
 }
 
@@ -175,15 +176,15 @@ form label span {
 }
 
 .campo ::ng-deep .mat-mdc-text-field-wrapper {
-  min-height: 26px;
-  padding: 0 8px;
+  min-height: 35px;
+  padding: 0 11px;
   background: #eee;
 }
 
 .campo ::ng-deep .mat-mdc-form-field-infix {
-  min-height: 24px;
-  padding-top: 3px;
-  padding-bottom: 3px;
+  min-height: 32px;
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
 .campo ::ng-deep .mdc-notched-outline__leading,
@@ -196,52 +197,58 @@ form label span {
 
 .campo input,
 .campo textarea {
-  font-size: 10px;
+  font-size: 14px;
   color: #222;
 }
 
 .campo-data {
-  width: 130px;
+  width: 230px;
+}
+
+.campo-data ::ng-deep .mat-datepicker-toggle .mat-mdc-icon-button {
+  width: 34px;
+  height: 34px;
+  padding: 5px;
 }
 
 .campo-data input {
-  font-size: 10px;
+  font-size: 14px;
 }
 
 .campo-descricao ::ng-deep .mat-mdc-text-field-wrapper {
-  min-height: 57px;
+  min-height: 77px;
 }
 
 .campo-descricao ::ng-deep .mat-mdc-form-field-infix {
-  min-height: 54px;
+  min-height: 73px;
 }
 
 .campo-descricao textarea {
   resize: vertical;
-  min-height: 38px;
+  min-height: 51px;
 }
 
 .botao-enviar {
-  width: 261px;
-  height: 29px;
+  width: 352px;
+  height: 39px;
   border-radius: 0;
   background: #08a3d0 !important;
   color: white !important;
-  font-size: 16px;
+  font-size: 22px;
   font-weight: 400;
   margin-top: 2px;
 }
 
 .mensagem {
   color: #541c1c;
-  font-size: 12px;
-  margin-top: 10px;
-  max-width: 460px;
+  font-size: 16px;
+  margin-top: 14px;
+  max-width: 621px;
 }
 
 @media (max-width: 700px) {
   .sidebar {
-    width: 58px;
+    width: 78px;
   }
 
   .item-menu {
@@ -254,15 +261,15 @@ form label span {
   }
 
   .conteudo {
-    margin-left: 58px;
-    padding: 24px 16px;
+    margin-left: 78px;
+    padding: 32px 22px;
   }
 
   .formulario-publicar h1 {
-    font-size: 21px;
+    font-size: 28px;
   }
 
   .botao-enviar {
-    width: min(261px, 100%);
+    width: min(352px, 100%);
   }
 }

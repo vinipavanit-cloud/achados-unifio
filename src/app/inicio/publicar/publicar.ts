@@ -21,7 +21,8 @@ export class Publicar implements OnInit {
   titulo = '';
   tipo: TipoPublicacao = 'PERDIDO';
   idLocal: number | null = null;
-  data = '';
+  data: Date | null = null;
+  readonly hoje = new Date();
   descricao = '';
   contato = '';
 
@@ -57,7 +58,7 @@ export class Publicar implements OnInit {
         idLocal: this.idLocal,
         nome: this.titulo.trim(),
         descricao: this.descricao.trim(),
-        dataOcorrencia: this.data,
+        dataOcorrencia: this.formatarData(this.data),
         tipo: this.tipo,
         contato: this.contato.trim(),
       })
@@ -71,5 +72,12 @@ export class Publicar implements OnInit {
           this.mensagem.set(mensagemErro(erro, 'Não foi possível publicar. Tente novamente.'));
         },
       });
+  }
+
+  // yyyy-MM-dd no fuso local (toISOString usaria UTC e poderia voltar um dia).
+  private formatarData(d: Date): string {
+    const mes = String(d.getMonth() + 1).padStart(2, '0');
+    const dia = String(d.getDate()).padStart(2, '0');
+    return `${d.getFullYear()}-${mes}-${dia}`;
   }
 }
