@@ -2,8 +2,9 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { mensagemErro } from '../../core/api.config';
 import { AuthService } from '../../core/auth.service';
+import { ContatoService } from '../../core/contato.service';
 import { LocalService } from '../../core/local.service';
-import { Local, TipoPublicacao } from '../../core/models';
+import { Contato, Local, TipoPublicacao } from '../../core/models';
 import { PublicacaoService } from '../../core/publicacao.service';
 
 @Component({
@@ -15,6 +16,7 @@ import { PublicacaoService } from '../../core/publicacao.service';
 export class Publicar implements OnInit {
   private publicacoesService = inject(PublicacaoService);
   private localService = inject(LocalService);
+  private contatoService = inject(ContatoService);
   private router = inject(Router);
   protected auth = inject(AuthService);
 
@@ -24,9 +26,10 @@ export class Publicar implements OnInit {
   data: Date | null = null;
   readonly hoje = new Date();
   descricao = '';
-  contato = '';
+  contatosSelecionados: number[] = [];
 
   locais = signal<Local[]>([]);
+  contatos = signal<Contato[]>([]);
   mensagem = signal('');
   enviando = signal(false);
 
@@ -37,6 +40,10 @@ export class Publicar implements OnInit {
         this.mensagem.set(mensagemErro(erro, 'Não foi possível carregar os locais.'));
       },
     });
+    this.contatoService.listar().subscribe({
+      next: (contatos) => this.contatos.set(contatos),
+      error: (erro) => this.mensagem.set(mensagemErro(erro, 'Não foi possível carregar os contatos.')),
+    });
   }
 
   enviar(): void {
@@ -44,7 +51,7 @@ export class Publicar implements OnInit {
       !this.titulo.trim() ||
       !this.data ||
       !this.descricao.trim() ||
-      !this.contato.trim() ||
+      this.contatosSelecionados.length === 0 ||
       this.idLocal === null
     ) {
       this.mensagem.set('Preencha todos os campos obrigatórios.');
@@ -60,7 +67,7 @@ export class Publicar implements OnInit {
         descricao: this.descricao.trim(),
         dataOcorrencia: this.formatarData(this.data),
         tipo: this.tipo,
-        contato: this.contato.trim(),
+        idsContatos: this.contatosSelecionados,
       })
       .subscribe({
         next: (criada) => {

@@ -29,16 +29,16 @@ describe('Dashboard', () => {
     expect(component).toBeTruthy();
   });
 
-  it('calcula os indicadores a partir das publicações', async () => {
-    http.expectOne((r) => r.url === `${API_URL}/publicacao/listarTodos`).flush({
-      content: [
-        { idPublicacao: 1, status: 'ATIVA', tipo: 'PERDIDO', usuario: null },
-        { idPublicacao: 2, status: 'FINALIZADA', tipo: 'ENCONTRADO', usuario: null },
-      ],
-    });
+  it('carrega os indicadores do endpoint do dashboard', async () => {
+    const indicadores = {
+      usuariosCadastrados: 8,
+      publicacoesAtivas: 4,
+      publicacoesFinalizadas: 2,
+      perdidos: 3,
+      encontrados: 3,
+    };
+    http.expectOne((r) => r.url === `${API_URL}/dashboard`).flush(indicadores);
     await fixture.whenStable();
-    expect(component.kpis().total).toBe(2);
-    expect(component.kpis().perdidos).toBe(1);
-    expect(component.kpis().finalizadas).toBe(1);
+    expect(component.dados()).toEqual(indicadores);
   });
 });

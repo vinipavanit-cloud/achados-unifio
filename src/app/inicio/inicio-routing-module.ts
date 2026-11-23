@@ -6,6 +6,7 @@ import { Publicar } from './publicar/publicar';
 import { Detalhe } from './detalhe/detalhe';
 import { MinhasPublicacoes } from './minhas-publicacoes/minhas-publicacoes';
 import { Dashboard } from './dashboard/dashboard';
+import { Contatos } from './contatos/contatos';
 import { adminGuard } from '../core/admin.guard';
 
 const routes: Routes = [
@@ -31,6 +32,9 @@ const routes: Routes = [
 
   {
     path: 'dashboard', component: Dashboard, canActivate: [adminGuard]
+  },
+  {
+    path: 'contatos', component: Contatos
   }
 ];
 

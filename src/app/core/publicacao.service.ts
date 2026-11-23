@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { API_URL } from './api.config';
-import { Kpis, Page, Publicacao, PublicacaoRequest } from './models';
+import { Dashboard, Page, Publicacao, PublicacaoContato, PublicacaoRequest } from './models';
 
 @Injectable({ providedIn: 'root' })
 export class PublicacaoService {
@@ -37,6 +37,10 @@ export class PublicacaoService {
     return this.http.get<Publicacao>(`${this.base}/${id}`);
   }
 
+  listarContatos(idPublicacao: number): Observable<PublicacaoContato[]> {
+    return this.http.get<PublicacaoContato[]>(`${this.base}/${idPublicacao}/contatos`);
+  }
+
   cadastrar(dados: PublicacaoRequest): Observable<Publicacao> {
     return this.http.post<Publicacao>(this.base, dados);
   }
@@ -48,17 +52,8 @@ export class PublicacaoService {
   excluir(id: number): Observable<string> {
     return this.http.delete(`${this.base}/${id}`, { responseType: 'text' });
   }
-}
 
-// KPIs do dashboard, calculados a partir das publicações carregadas.
-export function calcularKpis(lista: Publicacao[], idUsuario?: number): Kpis {
-  return {
-    total: lista.length,
-    ativas: lista.filter((p) => p.status === 'ATIVA').length,
-    finalizadas: lista.filter((p) => p.status === 'FINALIZADA').length,
-    perdidos: lista.filter((p) => p.tipo === 'PERDIDO').length,
-    encontrados: lista.filter((p) => p.tipo === 'ENCONTRADO').length,
-    minhas:
-      idUsuario === undefined ? 0 : lista.filter((p) => p.usuario?.idUsuario === idUsuario).length,
-  };
+  dashboard(): Observable<Dashboard> {
+    return this.http.get<Dashboard>(`${API_URL}/dashboard`);
+  }
 }

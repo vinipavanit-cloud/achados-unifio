@@ -1,0 +1,69 @@
+<div class="layout-contatos">
+  <header class="topbar">
+    <a class="marca" routerLink="/inicio" aria-label="Página inicial Achados e Perdidos UNIFIO">
+      <span class="marca-icone"><mat-icon>school</mat-icon></span>
+      <span class="marca-texto"><strong>UNIFIO</strong><small>ACHADOS E PERDIDOS</small></span>
+    </a>
+    <button mat-button class="usuario" type="button" routerLink="/inicio/minhas-publicacoes">
+      <span class="indicador-notificacao"></span>
+      <mat-icon>account_circle</mat-icon><span>{{ auth.nome }}</span>
+    </button>
+  </header>
+
+  <aside class="sidebar" aria-label="Menu principal">
+    <a mat-button class="item-menu" routerLink="/inicio/publicar"><mat-icon>add</mat-icon><span>PUBLICAR</span></a>
+    <a mat-button class="item-menu" routerLink="/inicio/pesquisar"><mat-icon>search</mat-icon><span>PESQUISAR</span></a>
+    <a mat-button class="item-menu ativo" routerLink="/inicio/contatos"><mat-icon>contacts</mat-icon><span>CONTATOS</span></a>
+    <a mat-button class="item-menu" routerLink="/inicio/dashboard" *ngIf="auth.admin"><mat-icon>dashboard</mat-icon><span>DASHBOARD</span></a>
+    <button mat-button class="item-menu" type="button" (click)="auth.sair()"><mat-icon>logout</mat-icon><span>SAIR</span></button>
+  </aside>
+
+  <main class="conteudo">
+    <h1>MEUS CONTATOS</h1>
+    <p class="subtitulo">Cadastre até 3 formas de contato para facilitar a devolução dos itens</p>
+
+    <form class="novo-contato" (ngSubmit)="cadastrar()">
+      <mat-form-field appearance="outline">
+        <mat-label>Novo contato</mat-label>
+        <input matInput name="novoContato" [(ngModel)]="novoContato"
+          placeholder="E-mail, telefone ou rede social" required />
+      </mat-form-field>
+      <button mat-flat-button color="primary" type="submit"
+        [disabled]="!novoContato.trim() || salvando() || contatos().length >= 3">
+        ADICIONAR
+      </button>
+    </form>
+
+    <p class="limite" *ngIf="contatos().length >= 3">Limite de 3 contatos atingido.</p>
+    <p class="mensagem" role="status" *ngIf="mensagem()">{{ mensagem() }}</p>
+
+    <section class="lista" aria-label="Contatos cadastrados">
+      <mat-card appearance="outlined" *ngFor="let contato of contatos()" class="cartao">
+        <mat-card-content>
+          <ng-container *ngIf="editandoId !== contato.idContato; else edicao">
+            <div class="linha">
+              <mat-icon>chat</mat-icon>
+              <strong>{{ contato.contato }}</strong>
+            </div>
+            <div class="acoes">
+              <button mat-button type="button" (click)="editar(contato)">EDITAR</button>
+              <button mat-button type="button" class="excluir" (click)="excluir(contato)">EXCLUIR</button>
+            </div>
+          </ng-container>
+          <ng-template #edicao>
+            <form class="edicao" (ngSubmit)="salvar(contato)">
+              <mat-form-field appearance="outline">
+                <mat-label>Contato</mat-label>
+                <input matInput name="contatoEdicao" [(ngModel)]="contatoEdicao" required />
+              </mat-form-field>
+              <button mat-button type="button" (click)="editandoId = null">Cancelar</button>
+              <button mat-flat-button type="submit" [disabled]="!contatoEdicao.trim()">Salvar</button>
+            </form>
+          </ng-template>
+        </mat-card-content>
+      </mat-card>
+      <p class="vazio" *ngIf="carregando()">Carregando contatos...</p>
+      <p class="vazio" *ngIf="!carregando() && contatos().length === 0">Nenhum contato cadastrado.</p>
+    </section>
+  </main>
+</div>

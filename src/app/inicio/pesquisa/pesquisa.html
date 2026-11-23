@@ -18,6 +18,7 @@
     <a mat-button class="item-menu ativo" routerLink="/inicio/pesquisar">
       <mat-icon>search</mat-icon><span>PESQUISAR</span>
     </a>
+    <a mat-button class="item-menu" routerLink="/inicio/contatos"><mat-icon>contacts</mat-icon><span>CONTATOS</span></a>
     <a mat-button class="item-menu" routerLink="/inicio/dashboard" *ngIf="auth.admin"><mat-icon>dashboard</mat-icon><span>DASHBOARD</span></a>
     <button mat-button class="item-menu" type="button" (click)="auth.sair()">
       <mat-icon>logout</mat-icon><span>SAIR</span>
@@ -33,6 +34,19 @@
         <button mat-icon-button type="submit" aria-label="Pesquisar">
           <mat-icon>search</mat-icon>
         </button>
+      </div>
+      <div class="filtros-avancados">
+        <mat-button-toggle-group name="tipo" [(ngModel)]="tipo" (change)="pesquisar()" aria-label="Filtrar por tipo">
+          <mat-button-toggle value="TODOS">Todos</mat-button-toggle>
+          <mat-button-toggle value="PERDIDO">Perdidos</mat-button-toggle>
+          <mat-button-toggle value="ENCONTRADO">Encontrados</mat-button-toggle>
+        </mat-button-toggle-group>
+        <mat-button-toggle-group name="status" [(ngModel)]="status" (change)="pesquisar()" aria-label="Filtrar por status">
+          <mat-button-toggle value="TODOS">Todos</mat-button-toggle>
+          <mat-button-toggle value="ATIVA">Ativas</mat-button-toggle>
+          <mat-button-toggle value="FINALIZADA">Finalizadas</mat-button-toggle>
+          <mat-button-toggle value="CANCELADA">Canceladas</mat-button-toggle>
+        </mat-button-toggle-group>
       </div>
       <h2>PESQUISAS RELACIONADAS:</h2>
     </form>

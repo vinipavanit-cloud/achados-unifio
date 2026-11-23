@@ -124,7 +124,7 @@ export class MinhasPublicacoes implements OnInit {
       dataOcorrencia: p.dataOcorrencia.slice(0, 10),
       tipo: p.tipo,
       status: p.status,
-      contato: p.contato ?? undefined,
+      idsContatos: p.contatos?.map((contato) => contato.idContato) ?? [],
       ...mudancas,
     };
     this.publicacoesService.atualizar(p.idPublicacao, dados).subscribe({

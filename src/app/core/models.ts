@@ -22,8 +22,7 @@ export interface Publicacao {
   dataOcorrencia: string;
   status: StatusPublicacao;
   tipo: TipoPublicacao;
-  // Ainda não existe no backend (ver documento de ajustes). Opcional até lá.
-  contato?: string | null;
+  contatos?: PublicacaoContato[];
 }
 
 export interface PublicacaoRequest {
@@ -33,7 +32,7 @@ export interface PublicacaoRequest {
   dataOcorrencia: string; // yyyy-MM-dd
   tipo: TipoPublicacao;
   status?: StatusPublicacao;
-  contato?: string;
+  idsContatos: number[];
 }
 
 export interface Page<T> {
@@ -49,6 +48,26 @@ export interface UsuarioLogado {
   nome: string;
   email: string;
   permissao?: string;
+}
+
+export interface Contato {
+  idContato: number;
+  usuario: UsuarioResumo | null;
+  contato: string;
+}
+
+export interface PublicacaoContato {
+  idPublicacao: number;
+  idContato: number;
+  contato: string;
+}
+
+export interface Dashboard {
+  usuariosCadastrados: number;
+  publicacoesAtivas: number;
+  publicacoesFinalizadas: number;
+  perdidos: number;
+  encontrados: number;
 }
 
 export interface Kpis {

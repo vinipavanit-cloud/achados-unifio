@@ -74,4 +74,35 @@ describe('PublicacaoService', () => {
 
     expect(resposta).toEqual(resultado);
   });
+
+  it('loads the contacts associated with a publication', () => {
+    const contatos = [{ idPublicacao: 12, idContato: 4, contato: 'email@example.com' }];
+    let resposta: typeof contatos | undefined;
+
+    service.listarContatos(12).subscribe((lista) => (resposta = lista));
+
+    const request = http.expectOne(`${API_URL}/publicacao/12/contatos`);
+    expect(request.request.method).toBe('GET');
+    request.flush(contatos);
+
+    expect(resposta).toEqual(contatos);
+  });
+
+  it('sends selected contact IDs when creating a publication', () => {
+    const request = {
+      idLocal: 2,
+      nome: 'Carteira',
+      descricao: 'Carteira azul',
+      dataOcorrencia: '2026-11-22',
+      tipo: 'PERDIDO' as const,
+      idsContatos: [4, 7],
+    };
+
+    service.cadastrar(request).subscribe();
+
+    const httpRequest = http.expectOne(`${API_URL}/publicacao`);
+    expect(httpRequest.request.method).toBe('POST');
+    expect(httpRequest.request.body).toEqual(request);
+    httpRequest.flush({});
+  });
 });

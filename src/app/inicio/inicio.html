@@ -19,6 +19,7 @@
     <a mat-button class="item-menu" routerLink="/inicio/pesquisar">
       <mat-icon>search</mat-icon><span>PESQUISAR</span>
     </a>
+    <a mat-button class="item-menu" routerLink="/inicio/contatos"><mat-icon>contacts</mat-icon><span>CONTATOS</span></a>
     <a mat-button class="item-menu" routerLink="/inicio/dashboard" *ngIf="auth.admin"><mat-icon>dashboard</mat-icon><span>DASHBOARD</span></a>
     <button mat-button class="item-menu" type="button" (click)="auth.sair()">
       <mat-icon>logout</mat-icon><span>SAIR</span>

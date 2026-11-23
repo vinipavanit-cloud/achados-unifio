@@ -12,6 +12,7 @@
   <aside class="sidebar" aria-label="Menu principal">
     <a mat-button class="item-menu" routerLink="/inicio/publicar"><mat-icon>add</mat-icon><span>PUBLICAR</span></a>
     <a mat-button class="item-menu" routerLink="/inicio/pesquisar"><mat-icon>search</mat-icon><span>PESQUISAR</span></a>
+    <a mat-button class="item-menu" routerLink="/inicio/contatos"><mat-icon>contacts</mat-icon><span>CONTATOS</span></a>
     <a mat-button class="item-menu" routerLink="/inicio/dashboard" *ngIf="auth.admin"><mat-icon>dashboard</mat-icon><span>DASHBOARD</span></a>
     <button mat-button class="item-menu" type="button" (click)="auth.sair()">
       <mat-icon>logout</mat-icon><span>SAIR</span>
@@ -28,21 +29,79 @@
       <p class="data-publicacao">Publicado em {{ p.dataCriacao | date:"dd/MM/yyyy 'às' HH:mm" }}</p>
 
       <section class="cartao-detalhe">
-        <h2>{{ p.nome }}</h2>
-        <div class="linha-status">
-          <span>TIPO: <strong [class.perdido]="p.tipo === 'PERDIDO'" [class.encontrado]="p.tipo === 'ENCONTRADO'">{{ p.tipo | titlecase }}</strong></span>
-          <span>STATUS: <strong [class.ativo]="p.status === 'ATIVA'">{{ p.status | titlecase }}</strong></span>
-        </div>
-        <p class="informacao">LOCAL: {{ p.local?.nome ?? 'Não informado' }}<br>DATA DA OCORRÊNCIA: {{ p.dataOcorrencia | date:'dd/MM/yyyy':'UTC' }}<br>PUBLICADO POR: {{ p.usuario?.nome ?? 'Não informado' }}</p>
-        <p class="rotulo-descricao">DESCRIÇÃO</p>
-        <p class="descricao">{{ p.descricao }}</p>
-        <p class="contato" *ngIf="contatoVisivel()">CONTATO: {{ p.contato || 'Contato não informado' }}</p>
+        <ng-container *ngIf="!editando(); else formularioEdicao">
+          <h2>{{ p.nome }}</h2>
+          <div class="linha-status">
+            <span>TIPO: <strong [class.perdido]="p.tipo === 'PERDIDO'" [class.encontrado]="p.tipo === 'ENCONTRADO'">{{ p.tipo | titlecase }}</strong></span>
+            <span>STATUS: <strong [class.ativo]="p.status === 'ATIVA'">{{ p.status | titlecase }}</strong></span>
+          </div>
+          <p class="informacao">LOCAL: {{ p.local?.nome ?? 'Não informado' }}<br>DATA DA OCORRÊNCIA: {{ p.dataOcorrencia | date:'dd/MM/yyyy':'UTC' }}<br>PUBLICADO POR: {{ p.usuario?.nome ?? 'Não informado' }}</p>
+          <p class="rotulo-descricao">DESCRIÇÃO</p>
+          <p class="descricao">{{ p.descricao }}</p>
+          <div class="contato" *ngIf="contatoVisivel()">
+            <strong>CONTATO(S):</strong>
+            <p *ngIf="carregandoContatos()">Carregando contatos...</p>
+            <p *ngFor="let contato of contatosPublicacao()">{{ contato.contato }}</p>
+            <p *ngIf="!carregandoContatos() && contatosPublicacao().length === 0">
+              Esta publicação não disponibilizou contatos.
+            </p>
+          </div>
+        </ng-container>
+
+        <ng-template #formularioEdicao>
+          <form class="formulario-edicao" #formEdicao="ngForm" (ngSubmit)="salvarEdicao(p)">
+            <mat-form-field appearance="outline" class="campo-edicao">
+              <mat-label>Título</mat-label>
+              <input matInput name="tituloEdicao" [(ngModel)]="tituloEdicao" required />
+            </mat-form-field>
+
+            <mat-button-toggle-group name="tipoEdicao" [(ngModel)]="tipoEdicao" aria-label="Tipo da publicação">
+              <mat-button-toggle value="PERDIDO">Perdido</mat-button-toggle>
+              <mat-button-toggle value="ENCONTRADO">Encontrado</mat-button-toggle>
+            </mat-button-toggle-group>
+
+            <mat-button-toggle-group name="statusEdicao" [(ngModel)]="statusEdicao" aria-label="Status da publicação">
+              <mat-button-toggle value="ATIVA">Ativa</mat-button-toggle>
+              <mat-button-toggle value="FINALIZADA">Finalizada</mat-button-toggle>
+              <mat-button-toggle value="CANCELADA">Cancelada</mat-button-toggle>
+            </mat-button-toggle-group>
+
+            <mat-form-field appearance="outline" class="campo-edicao">
+              <mat-label>Data da ocorrência</mat-label>
+              <input matInput name="dataEdicao" [matDatepicker]="seletorEdicao"
+                [max]="hoje" [(ngModel)]="dataEdicao" readonly required
+                (click)="seletorEdicao.open()" />
+              <mat-datepicker-toggle matIconSuffix [for]="seletorEdicao"></mat-datepicker-toggle>
+              <mat-datepicker #seletorEdicao></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="campo-edicao">
+              <mat-label>Descrição</mat-label>
+              <textarea matInput name="descricaoEdicao" [(ngModel)]="descricaoEdicao" rows="4" required></textarea>
+            </mat-form-field>
+
+            <div class="acoes-edicao">
+              <button mat-button type="button" (click)="cancelarEdicao()">Cancelar</button>
+              <button mat-flat-button type="submit" [disabled]="formEdicao.invalid || !edicaoValida || salvando()">Salvar alterações</button>
+            </div>
+          </form>
+        </ng-template>
       </section>
+      <p class="mensagem" role="status" *ngIf="mensagem()">{{ mensagem() }}</p>
     </ng-container>
 
     <footer class="acoes">
       <button mat-button class="botao-voltar" type="button" routerLink="/inicio/pesquisar">VOLTAR</button>
-      <button mat-flat-button color="primary" class="botao-contato" type="button" (click)="verContato()" [disabled]="!publicacao()">VER CONTATO</button>
+      <div class="acoes-administrativas" *ngIf="publicacao() as p">
+        <button mat-button class="botao-editar" type="button"
+          *ngIf="podeEditar(p) && !editando()" (click)="editar(p)">EDITAR</button>
+        <button mat-button class="botao-excluir" type="button"
+          *ngIf="podeExcluir(p)" (click)="excluir(p)">EXCLUIR</button>
+      </div>
+      <button mat-flat-button color="primary" class="botao-contato" type="button"
+        (click)="verContato()" [disabled]="!publicacao() || carregandoContatos()">
+        VER CONTATO(S)
+      </button>
     </footer>
   </main>
 </div>

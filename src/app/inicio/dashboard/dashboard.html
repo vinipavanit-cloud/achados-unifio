@@ -12,6 +12,7 @@
   <aside class="sidebar" aria-label="Menu principal">
     <a mat-button class="item-menu" routerLink="/inicio/publicar"><mat-icon>add</mat-icon><span>PUBLICAR</span></a>
     <a mat-button class="item-menu" routerLink="/inicio/pesquisar"><mat-icon>search</mat-icon><span>PESQUISAR</span></a>
+    <a mat-button class="item-menu" routerLink="/inicio/contatos"><mat-icon>contacts</mat-icon><span>CONTATOS</span></a>
     <a mat-button class="item-menu ativo" routerLink="/inicio/dashboard" *ngIf="auth.admin"><mat-icon>dashboard</mat-icon><span>DASHBOARD</span></a>
     <button mat-button class="item-menu" type="button" (click)="auth.sair()">
       <mat-icon>logout</mat-icon><span>SAIR</span>
@@ -25,13 +26,14 @@
     <p class="aviso-lista" *ngIf="carregando()">Carregando indicadores...</p>
     <p class="aviso-lista" role="alert" *ngIf="erro()">{{ erro() }}</p>
 
-    <section class="kpis" aria-label="Indicadores" *ngIf="!carregando() && !erro()">
-      <div class="kpi"><span class="kpi-valor">{{ kpis().total }}</span><span class="kpi-rotulo">Publicações no sistema</span></div>
-      <div class="kpi"><span class="kpi-valor">{{ kpis().ativas }}</span><span class="kpi-rotulo">Ativas</span></div>
-      <div class="kpi"><span class="kpi-valor">{{ kpis().finalizadas }}</span><span class="kpi-rotulo">Resolvidas</span></div>
-      <div class="kpi"><span class="kpi-valor">{{ kpis().perdidos }}</span><span class="kpi-rotulo">Itens perdidos</span></div>
-      <div class="kpi"><span class="kpi-valor">{{ kpis().encontrados }}</span><span class="kpi-rotulo">Itens encontrados</span></div>
-      <div class="kpi"><span class="kpi-valor">{{ kpis().minhas }}</span><span class="kpi-rotulo">Suas publicações</span></div>
+    <ng-container *ngIf="dados() as d">
+    <section class="kpis" aria-label="Indicadores">
+      <div class="kpi"><span class="kpi-valor">{{ d.usuariosCadastrados }}</span><span class="kpi-rotulo">Usuários cadastrados</span></div>
+      <div class="kpi"><span class="kpi-valor">{{ d.publicacoesAtivas }}</span><span class="kpi-rotulo">Publicações ativas</span></div>
+      <div class="kpi"><span class="kpi-valor">{{ d.publicacoesFinalizadas }}</span><span class="kpi-rotulo">Publicações finalizadas</span></div>
+      <div class="kpi"><span class="kpi-valor">{{ d.perdidos }}</span><span class="kpi-rotulo">Itens perdidos</span></div>
+      <div class="kpi"><span class="kpi-valor">{{ d.encontrados }}</span><span class="kpi-rotulo">Itens encontrados</span></div>
     </section>
+    </ng-container>
   </main>
 </div>

@@ -11,6 +11,7 @@
   <aside class="sidebar" aria-label="Menu principal">
     <a mat-button class="item-menu ativo" routerLink="/inicio/publicar"><mat-icon>add</mat-icon><span>PUBLICAR</span></a>
     <a mat-button class="item-menu" routerLink="/inicio/pesquisar"><mat-icon>search</mat-icon><span>PESQUISAR</span></a>
+    <a mat-button class="item-menu" routerLink="/inicio/contatos"><mat-icon>contacts</mat-icon><span>CONTATOS</span></a>
     <a mat-button class="item-menu" routerLink="/inicio/dashboard" *ngIf="auth.admin"><mat-icon>dashboard</mat-icon><span>DASHBOARD</span></a>
     <button mat-button class="item-menu" type="button" (click)="auth.sair()">
       <mat-icon>logout</mat-icon><span>SAIR</span>
@@ -47,9 +48,17 @@
         <mat-form-field appearance="outline" class="campo campo-descricao">
           <textarea matInput id="descricao" name="descricao" [(ngModel)]="descricao" placeholder="Descreva a ocorrência. Ex: Onde ocorreu, quando" rows="3" required></textarea>
         </mat-form-field>
-        <label for="contato">Contato<span>*</span></label>
+        <label for="contatos">Contatos<span>*</span></label>
         <mat-form-field appearance="outline" class="campo">
-          <input matInput id="contato" name="contato" [(ngModel)]="contato" placeholder="E-mail, telefone, perfil do instagram, deixe aqui sua informação de contato." required />
+          <mat-select id="contatos" name="contatos" [(ngModel)]="contatosSelecionados"
+            multiple required placeholder="Selecione um ou mais contatos">
+            <mat-option *ngFor="let contato of contatos()" [value]="contato.idContato">
+              {{ contato.contato }}
+            </mat-option>
+          </mat-select>
+          <mat-hint *ngIf="contatos().length === 0">
+            <a routerLink="/inicio/contatos">Cadastre seus contatos antes de publicar</a>
+          </mat-hint>
         </mat-form-field>
         <button mat-flat-button color="primary" class="botao-enviar" type="submit" [disabled]="formPublicacao.invalid || enviando()">Enviar</button>
         <p class="mensagem" role="status" *ngIf="mensagem()">{{ mensagem() }}</p>

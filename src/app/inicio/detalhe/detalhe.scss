@@ -231,6 +231,50 @@
   font-size: 16px;
 }
 
+.acoes-administrativas {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+  margin-right: 12px;
+}
+
+.botao-editar {
+  color: #08a3d0 !important;
+}
+
+.botao-excluir {
+  color: #d00000 !important;
+}
+
+.mensagem {
+  width: min(796px, 100%);
+  margin: 12px 0 0;
+  color: #541c1c;
+  font-size: 16px;
+}
+
+.formulario-edicao {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: #222;
+}
+
+.campo-edicao {
+  width: 100%;
+  background: #f7fcfd;
+}
+
+.formulario-edicao mat-button-toggle-group {
+  margin-bottom: 2px;
+}
+
+.acoes-edicao {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
 @media (max-width: 700px) {
   .sidebar {
     width: 78px;

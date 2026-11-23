@@ -1,7 +1,7 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { mensagemErro } from '../../core/api.config';
 import { AuthService } from '../../core/auth.service';
-import { Publicacao } from '../../core/models';
+import { Publicacao, StatusPublicacao, TipoPublicacao } from '../../core/models';
 import { PublicacaoService } from '../../core/publicacao.service';
 
 @Component({
@@ -15,6 +15,9 @@ export class Pesquisa implements OnInit {
   protected auth = inject(AuthService);
 
   termo = '';
+  tipo: TipoPublicacao | 'TODOS' = 'TODOS';
+  status: StatusPublicacao | 'TODOS' = 'TODOS';
+  todasPublicacoes: Publicacao[] = [];
   publicacoes = signal<Publicacao[]>([]);
   carregando = signal(true);
   erro = signal('');
@@ -26,28 +29,19 @@ export class Pesquisa implements OnInit {
   }
 
   pesquisar(pagina = 0): void {
-    const termo = this.termo.trim();
-    if (!termo) {
-      this.carregarTodas();
-      return;
-    }
-
-    this.carregando.set(true);
-    this.erro.set('');
-    this.publicacoesService.buscarPorNome(termo, pagina).subscribe({
-      next: (resultado) => {
-        this.publicacoes.set(resultado.content);
-        this.paginaAtual.set(resultado.number);
-        this.totalPaginas.set(resultado.totalPages);
-        this.carregando.set(false);
-      },
-      error: (erro) => {
-        this.publicacoes.set([]);
-        this.totalPaginas.set(0);
-        this.erro.set(mensagemErro(erro, 'Não foi possível pesquisar as publicações.'));
-        this.carregando.set(false);
-      },
+    void pagina;
+    const termo = this.termo.trim().toLowerCase();
+    const filtradas = this.todasPublicacoes.filter((publicacao) => {
+      const correspondeNome = !termo ||
+        publicacao.nome.toLowerCase().includes(termo) ||
+        publicacao.descricao.toLowerCase().includes(termo);
+      const correspondeTipo = this.tipo === 'TODOS' || publicacao.tipo === this.tipo;
+      const correspondeStatus = this.status === 'TODOS' || publicacao.status === this.status;
+      return correspondeNome && correspondeTipo && correspondeStatus;
     });
+    this.publicacoes.set(filtradas);
+    this.paginaAtual.set(0);
+    this.totalPaginas.set(1);
   }
 
   mudarPagina(pagina: number): void {
@@ -61,6 +55,7 @@ export class Pesquisa implements OnInit {
     this.totalPaginas.set(0);
     this.publicacoesService.listarTodas().subscribe({
       next: (lista) => {
+        this.todasPublicacoes = lista;
         this.publicacoes.set(lista);
         this.paginaAtual.set(0);
         this.carregando.set(false);

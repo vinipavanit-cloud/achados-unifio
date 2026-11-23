@@ -19,9 +19,10 @@ import { Pesquisa } from './pesquisa/pesquisa';
 import { Publicar } from './publicar/publicar';
 import { MinhasPublicacoes } from './minhas-publicacoes/minhas-publicacoes';
 import { Dashboard } from './dashboard/dashboard';
+import { Contatos } from './contatos/contatos';
 
 @NgModule({
-  declarations: [Inicio, Detalhe, Pesquisa, Publicar, MinhasPublicacoes, Dashboard],
+  declarations: [Inicio, Detalhe, Pesquisa, Publicar, MinhasPublicacoes, Dashboard, Contatos],
   imports: [
     CommonModule,
     InicioRoutingModule,
