@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/backend/:path*",
+      "destination": "https://expert-chainsaw-gx59x9x9v7pwh964q-8080.app.github.dev/:path*"
+    },
+    {
+      "source": "/:path*",
+      "destination": "/index.html"
+    }
+  ]
+}
