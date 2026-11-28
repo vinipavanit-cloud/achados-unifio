@@ -21,6 +21,7 @@ export class Cadastro {
   mostrarConfirmacao = false;
   mensagem = signal('');
   enviando = signal(false);
+  servidorOffline = signal(false);
 
   get emailValido(): boolean {
     return /^[^\s@]+@unifio\.edu\.br$/i.test(this.email.trim());
@@ -51,9 +52,17 @@ export class Cadastro {
       },
       error: (erro) => {
         this.enviando.set(false);
+        if (erro?.status === 0 || erro?.status === 401 || erro?.status === 404 || erro?.status >= 500) {
+          this.servidorOffline.set(true);
+        }
         this.mensagem.set(mensagemErro(erro, 'Não foi possível concluir o cadastro.'));
       },
     });
+  }
+
+  entrarComoVisitante(): void {
+    this.auth.entrarComoVisitante();
+    this.router.navigate(['/inicio']);
   }
 
   limpar(): void {

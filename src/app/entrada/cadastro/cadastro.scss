@@ -81,3 +81,18 @@ mat-card-actions {
 .mensagem {
   margin: 0;
 }
+
+.aviso-offline {
+  margin-top: 12px;
+  padding: 12px 14px;
+  border: 1px solid #f3c969;
+  border-radius: 12px;
+  background-color: #fff8e6;
+  color: #5c4300;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.aviso-offline p {
+  margin: 0 0 8px;
+}

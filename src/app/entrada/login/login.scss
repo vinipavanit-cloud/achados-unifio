@@ -87,3 +87,22 @@ button {
   line-height: 1.8;
   text-align: center;
 }
+
+.aviso-offline {
+  margin-top: 4px;
+  padding: 14px 16px;
+  border: 1px solid #f3c969;
+  border-radius: 12px;
+  background-color: #fff8e6;
+  color: #5c4300;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.aviso-offline p {
+  margin: 0 0 8px;
+}
+
+.aviso-offline button {
+  margin-top: 4px;
+}

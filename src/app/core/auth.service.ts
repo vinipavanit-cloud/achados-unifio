@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, catchError, finalize, map, of, switchMap } from 'rxjs';
 import { API_URL } from './api.config';
 import { CsrfService } from './csrf.service';
+import { ModoVisitanteService } from './modo-visitante.service';
 import { UsuarioLogado, UsuarioResumo } from './models';
 
 const CHAVE = 'achados.usuario';
@@ -13,6 +14,7 @@ export class AuthService {
   private http = inject(HttpClient);
   private csrf = inject(CsrfService);
   private router = inject(Router);
+  private visitante = inject(ModoVisitanteService);
 
   usuario: UsuarioLogado | null = this.ler();
 
@@ -65,7 +67,19 @@ export class AuthService {
     );
   }
 
+  entrarComoVisitante(): UsuarioLogado {
+    const usuario = this.visitante.ativar();
+    this.guardar(usuario);
+    return usuario;
+  }
+
   sair(): void {
+    if (this.visitante.ativo()) {
+      this.visitante.desativar();
+      this.limparSessao();
+      this.router.navigate(['/entrada/login']);
+      return;
+    }
     this.http
       .post(`${API_URL}/logout`, null, { responseType: 'text' })
       .pipe(

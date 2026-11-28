@@ -1,7 +1,8 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../core/auth.service';
 import { mensagemErro } from '../../core/api.config';
+import { ModoVisitanteService } from '../../core/modo-visitante.service';
 
 @Component({
   selector: 'app-login',
@@ -9,9 +10,10 @@ import { mensagemErro } from '../../core/api.config';
   templateUrl: './login.html',
   styleUrl: './login.scss',
 })
-export class Login {
+export class Login implements OnInit {
   private auth = inject(AuthService);
   private router = inject(Router);
+  private visitante = inject(ModoVisitanteService);
 
   email = '';
   senha = '';
@@ -19,6 +21,29 @@ export class Login {
   mostrarSenha = false;
   mensagem = signal('');
   enviando = signal(false);
+  verificandoServidor = signal(true);
+  servidorOffline = signal(false);
+
+  ngOnInit(): void {
+    if (this.visitante.ativo()) {
+      this.visitante.desativar();
+      this.auth.limparSessao();
+    }
+    this.verificarServidor();
+  }
+
+  verificarServidor(): void {
+    this.verificandoServidor.set(true);
+    this.visitante.verificarBackend().subscribe((online) => {
+      this.servidorOffline.set(!online);
+      this.verificandoServidor.set(false);
+    });
+  }
+
+  entrarComoVisitante(): void {
+    this.auth.entrarComoVisitante();
+    this.router.navigate(['/inicio']);
+  }
 
   entrar(): void {
     this.mensagem.set('');
@@ -36,6 +61,9 @@ export class Login {
       },
       error: (erro) => {
         this.enviando.set(false);
+        if (erro?.status === 0 || erro?.status === 404 || erro?.status >= 500) {
+          this.servidorOffline.set(true);
+        }
         this.mensagem.set(
           erro?.status === 401
             ? 'E-mail ou senha incorretos.'

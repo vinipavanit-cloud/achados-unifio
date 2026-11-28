@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { apiInterceptor } from './core/api.interceptor';
+import { mockBackendInterceptor } from './core/mock-backend.interceptor';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { apiInterceptor } from './core/api.interceptor';
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideHttpClient(withInterceptors([apiInterceptor])),
+    provideHttpClient(withInterceptors([mockBackendInterceptor, apiInterceptor])),
   ],
   bootstrap: [App]
 })

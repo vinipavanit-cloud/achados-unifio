@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { provideHttpClient } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { App } from './app';
 
@@ -11,6 +12,7 @@ describe('App', () => {
       declarations: [
         App
       ],
+      providers: [provideHttpClient()],
     })
       .compileComponents();
   });

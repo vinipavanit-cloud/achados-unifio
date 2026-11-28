@@ -1,4 +1,5 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { ModoVisitanteService } from './core/modo-visitante.service';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,6 @@ import { Component, signal } from '@angular/core';
   templateUrl: './app.html',
 })
 export class App {
+  protected readonly visitante = inject(ModoVisitanteService);
   protected readonly title = signal('achados-unifio');
 }

@@ -1,1 +1,4 @@
 <router-outlet />
+<div class="faixa-visitante" *ngIf="visitante.ativo()" role="status">
+  Modo visitante: dados locais e temporários (somem ao sair ou fechar a aba)
+</div>

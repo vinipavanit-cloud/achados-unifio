@@ -54,6 +54,16 @@
           </mat-form-field>
 
           <p *ngIf="mensagem()" class="mensagem" role="status">{{ mensagem() }}</p>
+
+          <div class="aviso-offline" *ngIf="servidorOffline()" role="status">
+            <p>
+              <strong>Servidor indisponível no momento.</strong> Você pode explorar o sistema como
+              visitante, com dados locais e temporários.
+            </p>
+            <button mat-stroked-button type="button" (click)="entrarComoVisitante()">
+              <mat-icon>person_outline</mat-icon> Entrar como visitante
+            </button>
+          </div>
         </mat-card-content>
 
         <mat-card-actions align="end">
